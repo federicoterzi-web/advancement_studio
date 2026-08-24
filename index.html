@@ -1,612 +1,126 @@
 <!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Advancement Studio — Fabric 1.21.1</title>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101722">
+<title>Advancement Studio · Schema Bible · 1.21.1</title>
 <style>
-:root{--bg:#11151b;--panel:#191f27;--panel2:#202833;--line:#34404d;--txt:#e8edf2;--muted:#9ca8b5;--accent:#7ee787;--gold:#f2cc60;--danger:#ff7b72;--blue:#79c0ff}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#0e1217,#151b22);color:var(--txt);font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
-header{padding:22px 28px;border-bottom:1px solid var(--line);background:#0d1117;position:sticky;top:0;z-index:5}
-h1{margin:0 0 5px;font-size:24px}h2{font-size:17px;margin:0 0 12px}h3{font-size:15px;margin:16px 0 8px}
-.sub{color:var(--muted)}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#263238;color:var(--accent);font-size:12px;margin-left:8px}
-.layout{display:grid;grid-template-columns:330px 1fr 430px;gap:14px;padding:14px;min-height:calc(100vh - 95px)}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;min-width:0}
-.scroll{overflow:auto;max-height:calc(100vh - 125px)}
-label{display:block;color:var(--muted);font-size:12px;margin:10px 0 5px}input,select,textarea{width:100%;background:#0d1117;color:var(--txt);border:1px solid var(--line);border-radius:7px;padding:8px;font:inherit}
-textarea{min-height:100px;resize:vertical}button{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:7px;padding:8px 10px;cursor:pointer}button:hover{border-color:#617080}button.primary{background:#238636;border-color:#2ea043}button.danger{color:#ffaaa5}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.trigger-list{display:grid;gap:6px}.trigger{width:100%;text-align:left;padding:9px 10px}.trigger small{display:block;color:var(--muted);margin-top:2px}
-.card{background:#11161d;border:1px solid var(--line);border-radius:9px;padding:12px;margin:10px 0}.criterion{border-left:3px solid var(--blue)}
-.tree-wrap{position:relative;height:calc(100vh - 235px);min-height:520px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:radial-gradient(circle at 50% 30%,#1b2631 0,#0c1117 65%);cursor:grab}
-.tree-wrap.grabbing{cursor:grabbing}.tree-canvas{position:absolute;left:0;top:0;transform-origin:0 0;width:2600px;height:1800px}
-.tree-grid{position:absolute;inset:0;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:40px 40px}
-.tree-links{position:absolute;inset:0;width:2600px;height:1800px;pointer-events:none;overflow:visible}
-.tree-link{fill:none;stroke:#526273;stroke-width:3;opacity:.8}.tree-link.selected{stroke:var(--accent);stroke-width:4}
-.adv-node{position:absolute;width:230px;min-height:105px;border:1px solid var(--line);background:linear-gradient(145deg,#151c24,#0f141a);border-radius:12px;padding:12px;box-shadow:0 8px 24px #0008;cursor:pointer;user-select:none}
-.adv-node:hover{border-color:#8da0b3;transform:translateY(-2px)}.adv-node.selected{outline:2px solid var(--accent);box-shadow:0 0 0 5px #7ee78720,0 10px 30px #0009}
-.adv-node.root{border-color:#8a63d2}.adv-node.goal{border-color:#d4ad48}.adv-node.challenge{border-color:#e05b5b}
-.adv-icon{width:42px;height:42px;float:left;margin-right:10px;border-radius:7px;background:#29323d;border:1px solid #526273;display:flex;align-items:center;justify-content:center;font-size:22px}
-.adv-title{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:2px}.adv-file{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adv-desc{clear:both;color:#b7c1cb;font-size:11px;padding-top:9px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.adv-pills{padding-top:7px}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:10px;color:var(--muted);margin:2px}.root-badge{color:#d2a8ff}.parent-badge{color:var(--gold)}
-.tree-toolbar{display:flex;gap:6px;align-items:center;margin-bottom:8px}.tree-toolbar button{min-width:34px}.zoom-label{font-size:11px;color:var(--muted);min-width:48px;text-align:center}
-.trigger-group{border:1px solid var(--line);border-radius:9px;margin:7px 0;overflow:hidden;background:#11161d}.trigger-group summary{cursor:pointer;padding:10px 11px;font-weight:700;list-style:none}.trigger-group summary::-webkit-details-marker{display:none}.trigger-group summary:before{content:"▸";display:inline-block;width:18px;color:var(--muted)}.trigger-group[open] summary:before{content:"▾"}.trigger-options{display:grid;gap:5px;padding:0 7px 7px}.trigger-option{width:100%;text-align:left;padding:8px 9px;background:#151b22}.trigger-option.selected{border-color:var(--accent);background:#17251c}.trigger-option small{display:block;color:var(--muted);margin-top:2px}.param-panel{background:#121a21;border:1px solid #2e414f;border-radius:9px;padding:10px;margin:8px 0}.param-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.param-help{font-size:11px;color:var(--muted);margin-top:6px}.location-builder .help{margin-top:9px}.location-builder select,.location-builder input{min-width:0}.location-builder .row{align-items:flex-start}.location-builder .pill{white-space:nowrap}.small{font-size:11px;color:var(--muted)}
-.req{background:#151b22;border:1px dashed #4b5967;border-radius:8px;padding:9px;margin:7px 0}.req b{color:var(--gold)}.logic{font-size:11px;color:var(--muted)}
-pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}.code{background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:12px;max-height:55vh;overflow:auto}
-.help{background:#13202b;border:1px solid #27465c;padding:10px;border-radius:8px;color:#c7e5ff}.warn{background:#2a2112;border-color:#66501f;color:#f6d98c}
-.tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);margin:-15px -15px 15px;padding:10px 10px 0}.tabs button{border-radius:7px 7px 0 0}.tabs button.active{background:var(--panel);border-bottom-color:var(--panel)}
-.empty{color:var(--muted);text-align:center;padding:35px 10px}.tree .node{transition:.15s transform,.15s border-color,.15s box-shadow}.tree .node:hover{transform:translateX(3px);border-color:var(--accent);box-shadow:0 4px 18px #0006}.tree .node.selected{outline:2px solid var(--accent)}.tree-line{border-left:1px solid #40505f}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:10px;color:var(--muted);margin:2px}.root-badge{color:#d2a8ff}.parent-badge{color:var(--gold)}.trigger-group{border:1px solid var(--line);border-radius:9px;margin:7px 0;overflow:hidden;background:#11161d}.trigger-group summary{cursor:pointer;padding:10px 11px;font-weight:700;list-style:none}.trigger-group summary::-webkit-details-marker{display:none}.trigger-group summary:before{content:"▸";display:inline-block;width:18px;color:var(--muted)}.trigger-group[open] summary:before{content:"▾"}.trigger-options{display:grid;gap:5px;padding:0 7px 7px}.trigger-option{width:100%;text-align:left;padding:8px 9px;background:#151b22}.trigger-option.selected{border-color:var(--accent);background:#17251c}.trigger-option small{display:block;color:var(--muted);margin-top:2px}.param-panel{background:#121a21;border:1px solid #2e414f;border-radius:9px;padding:10px;margin:8px 0}.param-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.param-help{font-size:11px;color:var(--muted);margin-top:6px}.location-builder .help{margin-top:9px}.location-builder select,.location-builder input{min-width:0}.location-builder .row{align-items:flex-start}.location-builder .pill{white-space:nowrap}.small{font-size:11px;color:var(--muted)}.check{display:flex;align-items:center;gap:7px}.check input{width:auto}.editor-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}.save-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.save-status{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:-4px}.save-badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #3a4a55}.save-badge.saved{background:#17351f;color:#8ff0a4}.save-badge.draft{background:#352b16;color:#ffd27a}.save-badge.pinned{background:#25203a;color:#d7b8ff}.pinned-node{box-shadow:0 0 0 2px #a875ff,0 8px 24px rgba(0,0,0,.25)}.save-main{border-color:#79d58a}
-@media(max-width:1100px){.layout{grid-template-columns:280px 1fr}.right{grid-column:1/-1}.scroll{max-height:none}}
-@media(max-width:700px){.layout{display:block}.panel{margin-bottom:12px}.scroll{max-height:none}}
-</style>
-</head>
-<body>
-<header>
-  <h1>⚒ Advancement Studio <span class="badge">Fabric 1.21.1</span></h1>
-  <div class="sub">Constructor visual de árboles de advancements para Fabric 1.21.1: roots, parents, ramas, criterios, lógica AND/OR, display y rewards.</div><div class="small" style="margin-top:6px">📱 En iPhone: usá <b>📦 Descargar ZIP</b>; luego abrilo desde Archivos. No requiere permisos de carpeta.</div>
-</header>
-
-<div class="layout">
-<section class="panel scroll">
-  <h2>1. Elegí un trigger</h2>
-  <div class="help">El trigger determina <b>qué evento del juego</b> escucha el criterio. Después podés completar sus condiciones. Esta versión está congelada en la sintaxis de 1.21.1.</div>
-  <label>Buscar trigger</label><input id="triggerSearch" placeholder="ej. matar, inventario, bloque…">
-  <div id="triggerList"></div>
-  <h3>Referencia rápida</h3>
-  <div class="small">Los triggers agregados después de 1.21.1 no aparecen aquí. En particular, no se usa el cambio de nombre de <code>killed_by_crossbow</code> de 1.21.2.</div>
-</section>
-
-<section class="panel scroll">
-  <div class="toolbar">
-    <button class="primary" onclick="newAdv()">＋ Nuevo advancement</button>
-    <button class="save-main" onclick="saveAdvancement()">💾 Guardar avance</button>
-    <button onclick="togglePin()">📌 Fijar avance</button>
-    <button onclick="saveProject()">💾 Guardar proyecto</button>
-    <button onclick="loadProject()">↩ Recuperar</button>
-    <button onclick="addChild()">＋ Hijo / rama</button>
-    <button onclick="addCriterion()">＋ Criterio</button>
-    <button onclick="addReqGroup()">＋ Grupo AND/OR</button><button onclick="exportFolder()">📁 Exportar carpeta (PC)</button>
-  </div>
-  <div id="editor"></div>
-</section>
-
-<section class="panel scroll right">
-  <div class="tabs"><button id="tabTree" class="active" onclick="showTab('tree')">🌳 Árbol</button><button id="tabJson" onclick="showTab('json')">{} JSON</button><button id="tabHelp" onclick="showTab('help')">❓ Explicaciones</button></div>
-  <div id="output"></div>
-</section>
-</div>
-
+:root{--bg:#0a0f15;--p:#111923;--p2:#17222e;--line:#2a394a;--txt:#edf5fb;--muted:#9cafc0;--a:#7fdcff;--ok:#7ee2a8;--bad:#ff8e9b;--warn:#ffd47d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1450px;margin:auto;padding:14px}.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.brand h1{margin:0;font-size:22px}.brand p{margin:4px 0;color:var(--muted)}button,select,input,textarea{font:inherit}button,select,input,textarea{background:#0b121a;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px}button{cursor:pointer;background:#16212d}button.primary{background:#164055;border-color:#438db1}.toolbar{display:flex;gap:6px;flex-wrap:wrap}.tabs{display:flex;gap:5px;margin:14px 0}.tabs button.active{border-color:var(--a);background:#183548}.grid{display:grid;grid-template-columns:320px 1fr;gap:12px}.panel{background:var(--p);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:12px}.sticky{position:sticky;top:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field{margin:8px 0}.field label{display:block;font-weight:700;font-size:12px;margin-bottom:4px}.help{color:var(--muted);font-size:12px;line-height:1.45}.param{background:var(--p2);border:1px solid var(--line);border-radius:9px;padding:10px;margin:8px 0}.param b{display:block;margin-bottom:5px}.cards{display:grid;gap:6px}.card{padding:9px;border:1px solid var(--line);border-radius:8px;background:#0d151e;cursor:pointer}.card.sel{border-color:var(--a);box-shadow:0 0 0 1px #7fdcff55}.badge{font-size:10px;border:1px solid var(--line);padding:2px 6px;border-radius:99px;color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}.tree{height:580px;overflow:auto;background:#080c11;border:1px solid var(--line);border-radius:10px;position:relative}.canvas{position:relative;width:1800px;height:1400px;background-image:linear-gradient(#18212b 1px,transparent 1px),linear-gradient(90deg,#18212b 1px,transparent 1px);background-size:32px 32px}.node{position:absolute;width:220px;padding:10px;border:2px solid #42586c;border-radius:11px;background:#121b25;cursor:pointer}.node.root{border-color:#936de4}.node.sel{border-color:var(--a)}.node .file{font:10px ui-monospace;color:#9cb1c4}.links{position:absolute;inset:0;pointer-events:none}.trigger-list{display:grid;gap:4px;max-height:440px;overflow:auto}.trigger{padding:7px;text-align:left;background:#0d151e}.trigger.sel{border-color:var(--a);background:#183244}.json{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word}.validation{display:grid;gap:6px}.v{padding:8px;border:1px solid var(--line);border-radius:7px}.v.ok{border-color:#2b6548}.v.bad{border-color:#743944}.v.warn{border-color:#705a28}@media(max-width:900px){.grid{grid-template-columns:1fr}.sticky{position:static}.row,.three{grid-template-columns:1fr}.tree{height:480px}}
+</style></head><body><div class="wrap">
+<div class="top"><div class="brand"><h1>🧬 Advancement Studio — Schema Bible</h1><p>Minecraft Java 1.21.1 · Fabric · generador guiado por esquema</p></div><div class="toolbar"><button class="primary" onclick="newProject()">＋ Nuevo</button><button onclick="save()">💾 Guardar</button><button onclick="validateTab()">🔍 Validar</button><button onclick="exportZip()">📦 Exportar ZIP</button></div></div>
+<div class="tabs"><button id="tTree" class="active" onclick="tab('tree')">🌳 Árbol</button><button id="tEdit" onclick="tab('edit')">🛠 Editor</button><button id="tVal" onclick="tab('val')">🔍 Validador</button><button id="tSchema" onclick="tab('schema')">📜 Schema</button></div>
+<div id="app"></div></div>
 <script>
-const T=[
-["allay_drop_item_on_block","Allay deja un objeto en un bloque","Comprueba el bloque donde el Allay deja el objeto."],
-["any_block_use","Cualquier interacción con bloque","Detecta una interacción con un bloque."],
-["avoid_vibration","Evitar una vibración","El jugador evita activar una vibración."],
-["bee_nest_destroyed","Destruir nido o colmena","Romper un nido o colmena de abejas."],
-["bred_animals","Reproducir animales","Dos animales se reproducen."],
-["brewed_potion","Preparar una poción","Sacar una poción de un soporte."],
-["changed_dimension","Cambiar de dimensión","Entrar en otra dimensión."],
-["channeled_lightning","Rayo canalizado","Un rayo de Channeling golpea entidades."],
-["construct_beacon","Construir un beacon","Construir/activar un beacon."],
-["consume_item","Consumir un objeto","Comer o beber un objeto."],
-["crafter_recipe_crafted","Crafter fabrica una receta","Un Crafter completa una receta."],
-["cured_zombie_villager","Curar un aldeano zombi","Completar la curación."],
-["default_block_use","Usar un bloque","Uso normal de un bloque."],
-["effects_changed","Cambiar efectos","Cambian los efectos del jugador."],
-["enchanted_item","Encantar un objeto","Encantar un objeto."],
-["enter_block","Entrar en un bloque","El jugador entra en un tipo de bloque."],
-["entity_hurt_player","Una entidad daña al jugador","El jugador recibe daño."],
-["entity_killed_player","Una entidad mata al jugador","El jugador muere por una entidad."],
-["fall_after_explosion","Caer después de una explosión","Aterrizar después de una explosión."],
-["fall_from_height","Caer desde una altura","Aterrizar después de una caída."],
-["filled_bucket","Llenar una cubeta","Una cubeta se llena."],
-["fishing_rod_hooked","Enganchar algo con la caña","La caña engancha algo."],
-["hero_of_the_village","Héroe de la Aldea","Obtener el estado Héroe de la Aldea."],
-["impossible","Imposible","Solo se completa mediante comando."],
-["inventory_changed","Cambiar el inventario","El inventario cambia."],
-["item_durability_changed","Cambiar durabilidad","Cambia la durabilidad de un objeto."],
-["item_used_on_block","Usar un objeto sobre un bloque","Usar un objeto sobre un bloque."],
-["killed_by_crossbow","Matar con ballesta","Una ballesta mata entidades."],
-["kill_mob_near_sculk_catalyst","Matar cerca de un catalizador sculk","Una entidad muere cerca del catalizador."],
-["levitation","Levitar","Levitar durante cierta distancia/tiempo."],
-["lightning_strike","Caer un rayo","Un rayo golpea el mundo."],
-["location","Estar en una ubicación","Comprueba posición, bioma, dimensión y estructura."],
-["nether_travel","Viajar por el Nether","Viaje con distancia y posición inicial."],
-["placed_block","Colocar un bloque","Colocar un bloque."],
-["player_generates_container_loot","Generar loot de contenedor","Generar el loot de un contenedor."],
-["player_hurt_entity","Dañar una entidad","El jugador hace daño."],
-["player_interacted_with_entity","Interactuar con una entidad","Interactuar con una entidad."],
-["player_killed_entity","Matar una entidad","El jugador mata una entidad."],
-["raid_omen","Obtener Raid Omen","Obtener el estado Raid Omen."],
-["raid_win","Ganar una raid","Ganar una incursión."],
-["recipe_crafted","Fabricar una receta","Completar una receta."],
-["recipe_unlocked","Desbloquear una receta","Desbloquear una receta."],
-["ride_entity_in_lava","Montar una entidad en lava","Viajar montado por lava."],
-["shot_crossbow","Disparar una ballesta","Disparar una ballesta."],
-["slept_in_bed","Dormir en una cama","Dormir en una cama."],
-["slide_down_block","Deslizarse por un bloque","Deslizarse por un bloque, como honey_block."],
-["started_riding","Empezar a montar","Empezar a montar una entidad."],
-["summoned_entity","Invocar una entidad","Invocar una entidad."],
-["tame_animal","Domesticar un animal","Domesticar una entidad."],
-["target_hit","Dar al blanco","Acertar un bloque objetivo."],
-["thrown_item_picked_up_by_entity","Una entidad recoge un objeto lanzado","Una entidad recoge el objeto."],
-["thrown_item_picked_up_by_player","El jugador recoge un objeto lanzado","El jugador recoge el objeto."],
-["tick","Tick","Se evalúa continuamente."],
-["used_ender_eye","Usar un ojo de Ender","Usar un ojo de Ender."],
-["used_totem","Usar un tótem","Un tótem salva al jugador."],
-["using_item","Usar un objeto","El jugador está usando un objeto."],
-["villager_trade","Comerciar con un aldeano","Completar un intercambio."]
+const VERSION="1.21.1",NSKEY="advstudio_schema_bible_1211";
+const TRIGGERS=[
+["bee_nest_destroyed","Bee nest destroyed","blocks",["player","block","item","num_bees_inside"]],
+["bred_animals","Bred animals","entities",["parent","partner","child"]],
+["brewed_potion","Brewed potion","items",["potion"]],
+["changed_dimension","Changed dimension","movement",["from","to"]],
+["channeled_lightning","Channeled lightning","combat",["victims"]],
+["construct_beacon","Construct beacon","world",["level"]],
+["consume_item","Consume item","items",["item"]],
+["cured_zombie_villager","Cured zombie villager","entities",["zombie","villager"]],
+["effects_changed","Effects changed","world",["effects"]],
+["enchanted_item","Enchanted item","items",["item","levels_changed"]],
+["enter_block","Enter block","blocks",["block"]],
+["entity_hurt_player","Entity hurts player","combat",["damage"]],
+["entity_killed_player","Entity kills player","combat",["entity"]],
+["filled_bucket","Filled bucket","items",["item"]],
+["fishing_rod_hooked","Fishing rod hooked","items",["item","entity"]],
+["hero_of_the_village","Hero of the village","world",["location"]],
+["impossible","Impossible","special",[]],
+["inventory_changed","Inventory changed","items",["slots","items"]],
+["item_durability_changed","Item durability changed","items",["durability","delta","item"]],
+["item_used_on_block","Item used on block","blocks",["location","item","block"]],
+["killed_by_crossbow","Killed by crossbow","combat",["victims"]],
+["levitation","Levitation","movement",["distance","duration"]],
+["location","Location","movement",["player"]],
+["nether_travel","Nether travel","movement",["start_position","distance"]],
+["placed_block","Placed block","blocks",["block","item","location"]],
+["player_generates_container_loot","Player generates container loot","world",["loot_table"]],
+["player_hurt_entity","Player hurts entity","combat",["entity","damage"]],
+["player_interacted_with_entity","Player interacted with entity","entities",["item","entity"]],
+["player_killed_entity","Player killed entity","combat",["entity"]],
+["recipe_unlocked","Recipe unlocked","recipes",["recipe"]],
+["shot_crossbow","Shot crossbow","combat",["item","unique_entity_types"]],
+["slept_in_bed","Slept in bed","movement",["location"]],
+["slide_down_block","Slide down block","movement",["block"]],
+["started_riding","Started riding","movement",["vehicle"]],
+["summoned_entity","Summoned entity","entities",["entity"]],
+["tame_animal","Tame animal","entities",["entity"]],
+["target_hit","Target hit","combat",["signal_strength"]],
+["thrown_item_picked_up_by_entity","Thrown item picked up by entity","items",["item","entity"]],
+["thrown_item_picked_up_by_player","Thrown item picked up by player","items",["item"]],
+["tick","Tick","special",["player"]],
+["used_ender_eye","Used ender eye","items",["distance"]],
+["used_totem","Used totem","items",["item"]],
+["using_item","Using item","items",["item"]],
+["villager_trade","Villager trade","entities",["item","villager"]],
+["default_block_use","Default block use","blocks",["location","item","block"]],
+["any_block_use","Any block use","blocks",["location","item","block"]],
+["allay_drop_item_on_block","Allay drop item on block","blocks",["location","item"]]
 ];
-
-const desc={
-inventory_changed:"Ideal para obtener un objeto. Puede filtrar item, cantidad, durabilidad y componentes.",
-player_killed_entity:"Se activa cuando el jugador es la fuente de la muerte. Las condiciones permiten filtrar la entidad y el golpe final.",
-player_hurt_entity:"Detecta daño causado por el jugador y permite filtrar entidad y tipo de daño.",
-player_interacted_with_entity:"Detecta interacción con una entidad; podés exigir tipo de entidad y objeto en la mano.",
-location:"No espera un evento puntual: comprueba condiciones de ubicación del jugador.",
-tick:"Se activa cada tick. Es útil como base para predicados/condiciones, pero no para lógica que necesite memoria.",
-impossible:"Nunca se completa por sí solo; sirve para advancements concedidos mediante comandos.",
-recipe_crafted:"En 1.21.1 usa recipe_id e ingredients.",
-crafter_recipe_crafted:"En 1.21.1 usa recipe_id e ingredients y comprueba jugadores cercanos al Crafter.",
-fall_after_explosion:"En 1.21.1 permite start_position, distance y cause.",
-killed_by_crossbow:"IMPORTANTE: en 1.21.1 el trigger se llama killed_by_crossbow; el renombrado a killed_by_arrow ocurrió en 1.21.2."
-};
-
-let state={nodes:[],selected:null,tab:"tree"};
-function id(){return crypto.randomUUID().slice(0,8)}
-function baseNode(root=false){return {id:id(),name:root?"root":"nuevo_avance",parent:null,root,pinned:false,saved:false,display:{title:root?"Mi raíz":"Nuevo avance",description:"Descripción del avance",icon:"minecraft:stone",frame:root?"task":"task",show_toast:true,announce_to_chat:true,hidden:false},criteria:[],requirements:[],rewards:{},pos:{x:0,y:0}}}
-function newAdv(){
- if(state.nodes.length && !confirm("Esto empieza un proyecto nuevo y reemplaza el árbol actual.\n\nSi querés conservarlo, usá 💾 Guardar proyecto primero.\n\n¿Continuar?"))return;
- state.nodes=[];let n=baseNode(true);state.nodes.push(n);state.selected=n.id;state.tab="tree";persistState();render()
+const GROUP={items:"🎒 Items",blocks:"🧱 Blocks",combat:"⚔️ Combat",movement:"🧭 Movement",entities:"🧟 Entities",world:"🌎 World",recipes:"📖 Recipes",special:"⚙️ Special"};
+const ITEMTR=["inventory_changed","consume_item","enchanted_item","filled_bucket","item_used_on_block","player_interacted_with_entity","shot_crossbow","thrown_item_picked_up_by_entity","thrown_item_picked_up_by_player","used_totem","using_item"];
+const state={nodes:[],sel:null,tab:"tree",ns:"ggg"};
+const uid=()=>crypto.randomUUID?.()||Date.now()+"_"+Math.random().toString(36).slice(2);
+function root(){return{id:uid(),name:"root",root:true,parent:null,display:{title:"Root",description:"",icon:"minecraft:grass_block",frame:"task",background:"minecraft:textures/gui/advancements/backgrounds/stone.png",show_toast:false,announce_to_chat:false,hidden:false},criteria:[],requirements:[],rewards:{},pos:{x:750,y:40},saved:false}}
+function node(){return{id:uid(),name:"nuevo_avance",root:false,parent:null,display:{title:"Nuevo avance",description:"",icon:"minecraft:stone",frame:"task",background:"",show_toast:true,announce_to_chat:true,hidden:false},criteria:[],requirements:[],rewards:{},pos:{x:750,y:240},saved:false}}
+function init(){if(!state.nodes.length){state.nodes=[root()];state.sel=state.nodes[0].id}render()}
+function selected(){return state.nodes.find(n=>n.id===state.sel)}
+function parent(n){return n?.parent?state.nodes.find(x=>x.id===n.parent):null}
+function clean(v){return(v||"").trim().replaceAll("\\","/").replace(/^\/+|\/+$/g,"").replace(/[^A-Za-z0-9_./-]/g,"_")||"nuevo_avance"}
+function unique(v,ignore){let b=clean(v),x=b,i=2;while(state.nodes.some(n=>n!==ignore&&n.name===x))x=b+"_copy"+i++;return x}
+function newProject(){if(state.nodes.length&&!confirm("¿Crear un proyecto nuevo?"))return;state.nodes=[root()];state.sel=state.nodes[0].id;saveLocal();render()}
+function addChild(){let p=selected();if(!p)return;let n=node();n.name=unique(p.name+"_child");n.parent=p.id;n.display.title="Hijo de "+p.display.title;n.pos={x:p.pos.x,y:p.pos.y+220};state.nodes.push(n);state.sel=n.id;saveLocal();render()}
+function duplicate(){let n=selected();if(!n)return;let x=structuredClone(n);x.id=uid();x.name=unique(n.name+"_copy");x.root=false;x.display.title+=" (copia)";x.pos={x:n.pos.x+250,y:n.pos.y+30};state.nodes.push(x);state.sel=x.id;saveLocal();render()}
+function remove(){let n=selected();if(!n)return;if(!confirm("Eliminar "+n.name+"?"))return;state.nodes=state.nodes.filter(x=>x.id!==n.id);state.nodes.forEach(x=>{if(x.parent===n.id){x.parent=null;x.root=true}});if(!state.nodes.length)state.nodes=[root()];if(!state.nodes.some(x=>x.root)){state.nodes[0].root=true;state.nodes[0].parent=null}state.sel=state.nodes[0].id;saveLocal();render()}
+function setParent(v){let n=selected();if(!n)return;if(!v){n.parent=null;n.root=true}else{let p=state.nodes.find(x=>x.id===v);let cur=p;while(cur){if(cur.id===n.id)return alert("Eso crea un ciclo.");cur=parent(cur)}n.parent=p.id;n.root=false}n.saved=false;saveLocal();render()}
+function saveLocal(){localStorage.setItem(NSKEY,JSON.stringify(state))}
+function save(){state.nodes.forEach(n=>n.saved=true);saveLocal();render();alert("Guardado en este navegador.")}
+function tab(t){state.tab=t;document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));document.getElementById(t==="tree"?"tTree":t==="edit"?"tEdit":t==="val"?"tVal":"tSchema").classList.add("active");render()}
+function validateTab(){state.tab="val";render()}
+function setBasic(path,v){let n=selected();let a=path.split(".");let o=n;for(let i=0;i<a.length-1;i++)o=o[a[i]];o[a.at(-1)]=v;n.saved=false;saveLocal();render()}
+function addCriterion(){let n=selected();let id="criterio_"+(n.criteria.length+1);n.criteria.push({id,trigger:"inventory_changed",conditions:{}});n.requirements=[...(n.requirements.length?n.requirements:[[]])];n.requirements[0].push(id);n.saved=false;saveLocal();render()}
+function delCriterion(i){let n=selected(),id=n.criteria[i].id;n.criteria.splice(i,1);n.requirements=n.requirements.map(g=>g.filter(x=>x!==id)).filter(Boolean).filter(g=>g.length);saveLocal();render()}
+function changeTrigger(i,v){let c=selected().criteria[i];c.trigger=v;c.conditions={};saveLocal();render()}
+function setCond(i,key,v){let c=selected().criteria[i];if(v===""){delete c.conditions[key]}else if(key==="slots"||key==="items"||key==="entity"||key==="damage"||key==="effects"||key==="player"||key==="location"||key==="block"||key==="item")try{c.conditions[key]=JSON.parse(v)}catch{c.conditions[key]=v}else c.conditions[key]=Number.isFinite(+v)&&v.trim()!==""?+v:v;selected().saved=false;saveLocal();render()}
+function field(label,value,oninput,help=""){return `<div class="field"><label>${label}</label><input value="${esc(value)}" oninput="${oninput}">${help?`<div class="help">${help}</div>`:""}</div>`}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]) )}
+function condUI(c,i){
+ const t=c.trigger, h=`<div class="param"><b>📜 Schema 1.21.1</b><div class="help">Estos campos son los que el editor conoce para este trigger. Los campos internos no se exportan. Si necesitás una estructura que todavía no tenga formulario guiado, usá JSON avanzado: el validador la marcará como “manual” en vez de fingir que es válida.</div></div>`;
+ if(t==="inventory_changed")return h+`<div class="param"><b>🎒 Items</b>${field("Lista de item predicates",JSON.stringify(c.conditions.items||[],null,2),`setCond(${i},'items',this.value)`,`Ej.: [{"items":"minecraft:diamond"}]`)}</div><div class="param"><b>Slots</b>${field("slots",JSON.stringify(c.conditions.slots||{},null,2),`setCond(${i},'slots',this.value)`,`occupied/full/empty usan rangos.`)}</div>`;
+ if(ITEMTR.includes(t))return h+`<div class="param"><b>📦 Item predicate</b>${field("JSON del item",JSON.stringify(c.conditions.item||{},null,2),`setCond(${i},'item',this.value)`,`En 1.21.1 el ItemPredicate usa la forma post-components: items, count, components, predicates.`)}</div>`;
+ if(t==="changed_dimension")return h+`<div class="row">${field("from",c.conditions.from||"",`setCond(${i},'from',this.value)`)}${field("to",c.conditions.to||"",`setCond(${i},'to',this.value)`)}</div>`;
+ if(t==="location"||t==="slept_in_bed")return h+`<div class="param"><b>📍 Player / Location predicate</b>${field("player (JSON)",JSON.stringify(c.conditions.player||[],null,2),`setCond(${i},'player',this.value)`,`Para location el schema usa player como lista de EntityPredicates; dentro de predicate.location va LocationPredicate.`)}</div>`;
+ if(["player_killed_entity","player_hurt_entity","entity_killed_player","entity_hurt_player","player_interacted_with_entity","summoned_entity","tame_animal"].includes(t))return h+field("entity (JSON)",JSON.stringify(c.conditions.entity||[],null,2),`setCond(${i},'entity',this.value)`,`Lista de EntityPredicates.`);
+ if(t==="recipe_unlocked")return h+field("recipe",c.conditions.recipe||"",`setCond(${i},'recipe',this.value)`);
+ if(t==="construct_beacon")return h+field("level",c.conditions.level?.min??c.conditions.level??"",`setCond(${i},'level',this.value)`,`MinMaxBounds.`);
+ if(t==="target_hit")return h+field("signal_strength",c.conditions.signal_strength?.min??c.conditions.signal_strength??"",`setCond(${i},'signal_strength',this.value)`);
+ if(t==="used_ender_eye")return h+field("distance",JSON.stringify(c.conditions.distance||{},null,2),`setCond(${i},'distance',this.value)`);
+ if(t==="levitation")return h+`<div class="row">${field("distance (JSON)",JSON.stringify(c.conditions.distance||{},null,2),`setCond(${i},'distance',this.value)`)}${field("duration (JSON)",JSON.stringify(c.conditions.duration||{},null,2),`setCond(${i},'duration',this.value)`)}</div>`;
+ if(t==="impossible"||t==="tick")return h+`<div class="param"><b>Sin conditions</b><div class="help">El esquema no necesita parámetros para este trigger.</div></div>`;
+ return h+`<div class="param"><b>🧩 Modo manual</b><div class="help">Este trigger está reconocido por el esquema, pero este formulario no inventará campos. Pegá las conditions exactas según el esquema en JSON avanzado.</div></div>`;
 }
-function addChild(){if(!state.selected)return alert("Seleccioná un advancement primero.");let p=state.nodes.find(n=>n.id===state.selected);let n=baseNode(false);n.parent=p.id;n.display.title="Hijo de "+p.display.title;state.nodes.push(n);state.selected=n.id;schedulePersist();render()}
-function addCriterion(){let n=selected();if(!n)return alert("Seleccioná un advancement.");n.criteria.push({id:"criterio_"+(n.criteria.length+1),trigger:"inventory_changed",conditions:{}});if(!n.requirements.length)n.requirements.push([]);n.requirements[0].push(n.criteria.at(-1).id);n.saved=false;schedulePersist();render()}
-function addReqGroup(){let n=selected();if(!n)return alert("Seleccioná un advancement.");n.requirements.push([]);n.saved=false;schedulePersist();render()}
-const STORAGE_KEY="advancement_studio_fabric_1_21_1_project";
-let lastSavedAt=null;
-function persistState(){
- try{
-   localStorage.setItem(STORAGE_KEY,JSON.stringify({nodes:state.nodes,selected:state.selected,tab:state.tab,savedAt:new Date().toISOString()}));
-   lastSavedAt=new Date();
-   return true;
- }catch(e){console.warn("No se pudo guardar localmente",e);return false}
-}
-function saveAdvancement(){
- const n=selected();if(!n)return alert("Seleccioná un advancement primero.");
- n.saved=true;
- persistState();
- render();
-}
-function togglePin(){
- const n=selected();if(!n)return alert("Seleccioná un advancement primero.");
- n.pinned=!n.pinned;
- persistState();
- render();
-}
-function saveProject(){
- if(!state.nodes.length)return alert("No hay nada para guardar.");
- state.nodes.forEach(n=>n.saved=true);
- if(!persistState())return alert("El navegador no permitió guardar el proyecto.");
- render();
- alert("Proyecto guardado en este navegador. Podés cerrar la página y volver más tarde.");
-}
-function loadProject(){
- try{
-   const raw=localStorage.getItem(STORAGE_KEY);
-   if(!raw)return alert("No hay un proyecto guardado en este navegador.");
-   const data=JSON.parse(raw);
-   if(!Array.isArray(data.nodes)||!data.nodes.length)throw new Error("Proyecto vacío");
-   state.nodes=data.nodes;
-   state.selected=data.selected||data.nodes[0].id;
-   state.tab=data.tab||"tree";
-   state.nodes.forEach(n=>{if(n.saved==null)n.saved=true;if(n.pinned==null)n.pinned=false});
-   render();
-   alert("Proyecto recuperado. Se cargaron "+state.nodes.length+" advancements.");
- }catch(e){alert("No se pudo recuperar el proyecto: "+e.message)}
-}
-function clearSavedProject(){
- if(confirm("¿Borrar la copia guardada de este navegador? Esto no borra tu árbol actual.")){
-   localStorage.removeItem(STORAGE_KEY);lastSavedAt=null;render();
- }
-}
-function saveStatusHtml(n){
- if(!n)return "";
- const saved=n.saved?`<span class="save-badge saved">✓ Guardado</span>`:`<span class="save-badge draft">● Borrador</span>`;
- const pin=n.pinned?`<span class="save-badge pinned">📌 Fijado</span>`:"";
- return `<div class="save-status">${saved}${pin}<span class="small">Los cambios se guardan automáticamente en este navegador después de Guardar avance.</span></div>`;
-}
-
-function selected(){return state.nodes.find(n=>n.id===state.selected)}
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function triggerLabel(x){let a=T.find(t=>t[0]===x);return a?a[1]:x}
-function renderTriggers(){
- let q=(document.getElementById("triggerSearch").value||"").toLowerCase();
- const groups={
-  "🏹 Combate y daño":["player_killed_entity","player_hurt_entity","entity_killed_player","entity_hurt_player","killed_by_crossbow","channeled_lightning","lightning_strike","shot_crossbow","target_hit","kill_mob_near_sculk_catalyst"],
-  "🎒 Objetos e inventario":["inventory_changed","consume_item","enchanted_item","filled_bucket","item_durability_changed","using_item","used_totem","thrown_item_picked_up_by_player","thrown_item_picked_up_by_entity","fishing_rod_hooked"],
-  "🧱 Bloques e interacción":["placed_block","item_used_on_block","allay_drop_item_on_block","default_block_use","any_block_use","enter_block","slide_down_block","bee_nest_destroyed","construct_beacon"],
-  "🧭 Movimiento y ubicación":["location","changed_dimension","nether_travel","fall_from_height","fall_after_explosion","ride_entity_in_lava","slept_in_bed","started_riding","levitation"],
-  "🐄 Animales y entidades":["bred_animals","summoned_entity","tame_animal","player_interacted_with_entity","cured_zombie_villager","villager_trade"],
-  "🧪 Efectos y eventos":["effects_changed","used_ender_eye","avoid_vibration","raid_omen","raid_win","hero_of_the_village"],
-  "📖 Recetas y fabricación":["recipe_crafted","crafter_recipe_crafted","recipe_unlocked"],
-  "⚙️ Otros":["player_generates_container_loot","tick","impossible"]
- };
- const current=selected()?.criteria.at(-1)?.trigger;
- document.getElementById("triggerList").innerHTML=Object.entries(groups).map(([name,ids])=>{
-  const arr=ids.map(id=>T.find(t=>t[0]===id)).filter(Boolean).filter(t=>(t[0]+" "+t[1]+" "+t[2]).toLowerCase().includes(q));
-  if(!arr.length)return "";
-  const open=(!!q)||!!arr.find(t=>t[0]===current);
-  return `<details class="trigger-group" ${open?"open":""}><summary>${name}<span class="small"> · ${arr.length}</span></summary><div class="trigger-options">${arr.map(t=>`<button class="trigger-option ${t[0]===current?"selected":""}" type="button" onclick="chooseTrigger('${t[0]}')"><b>${t[1]}</b><small><code>minecraft:${t[0]}</code> · ${t[2]}</small></button>`).join("")}</div></details>`;
- }).join("");
-}
-document.getElementById("triggerSearch").oninput=renderTriggers;
-function chooseTrigger(tr){let n=selected();if(!n){newAdv();n=selected()}let c=n.criteria.at(-1);if(!c){c={id:"criterio_1",trigger:tr,conditions:{}};n.criteria.push(c);n.requirements=[["criterio_1"]]}else c.trigger=tr;render()}
-function render(){
- renderTriggers();
- let n=selected();
- document.getElementById("editor").innerHTML=n?editorHtml(n):`<div class="empty">Creá una raíz y después agregá padres, hijos y criterios.<br><br>La aplicación genera todos los JSON y mantiene las relaciones de <b>parent → child</b>.</div>`;
- document.getElementById("output").innerHTML=state.tab==="tree"?treeHtml():state.tab==="json"?jsonHtml():helpHtml();
- if(state.tab==="tree") requestAnimationFrame(()=>applyTreeView());
-}
-function editorHtml(n){
- return `<div class="editor-heading"><div><h2>Advancement seleccionado</h2>${saveStatusHtml(n)}</div><div class="save-actions">
- <button class="primary" onclick="saveAdvancement()">💾 Guardar avance</button>
- <button onclick="togglePin()">${n.pinned?"📌 Desfijar":"📌 Fijar avance"}</button>
- </div></div>
- <div class="row"><div><label>ID / archivo</label><input value="${escapeHtml(n.name)}" onchange="setN('name',this.value)"></div><div><label>Parent</label><input value="${escapeHtml(n.parent||'(ROOT)')}" disabled></div></div>
- <h3>Display</h3>
- <div class="row"><div><label>Título</label><input value="${escapeHtml(n.display.title)}" onchange="setD('title',this.value)"></div><div><label>Icono (ID)</label><input value="${escapeHtml(n.display.icon)}" onchange="setD('icon',this.value)"></div></div>
- <label>Descripción</label><textarea onchange="setD('description',this.value)">${escapeHtml(n.display.description)}</textarea>
- <div class="row"><div><label>Frame</label><select onchange="setD('frame',this.value)">${["task","goal","challenge"].map(x=>`<option ${n.display.frame===x?"selected":""}>${x}</option>`).join("")}</select></div><div><label>Background (solo root)</label><input value="${escapeHtml(n.display.background||"")}" placeholder="textures/gui/advancements/backgrounds/adventure.png" onchange="setD('background',this.value)"></div></div>
- <div class="row"><label class="check"><input type="checkbox" ${n.display.show_toast?"checked":""} onchange="setD('show_toast',this.checked)"> toast</label><label class="check"><input type="checkbox" ${n.display.announce_to_chat?"checked":""} onchange="setD('announce_to_chat',this.checked)"> chat</label><label class="check"><input type="checkbox" ${n.display.hidden?"checked":""} onchange="setD('hidden',this.checked)"> hidden</label></div>
- <h3>Criterios</h3>${n.criteria.length?n.criteria.map((c,i)=>criterionHtml(n,c,i)).join(""):"<div class='small'>Todavía no hay criterios.</div>"}
- <h3>Requirements — lógica AND / OR</h3>
- <div class="help">Cada fila es un grupo <b>OR</b>. Dentro de una fila, todos los criterios deben cumplirse: <b>AND</b>. Ejemplo: [[A,B],[C]] significa <b>(A AND B) OR C</b>.</div>
- ${n.requirements.map((g,i)=>`<div class="req"><b>Grupo ${i+1} — AND</b><div class="row">${g.map(cid=>`<select onchange="reqChange(${i},'${cid}',this.value)"><option value="">— criterio —</option>${n.criteria.map(c=>`<option value="${c.id}" ${c.id===cid?"selected":""}>${c.id}</option>`).join("")}</select>`).join("")}<button onclick="reqAdd(${i})">＋</button><button class="danger" onclick="reqDel(${i})">×</button></div><div class="logic">Los grupos entre sí funcionan como OR.</div></div>`).join("")}
- <h3>Rewards</h3>
- <div class="row"><div><label>XP</label><input type="number" min="0" value="${n.rewards.experience||0}" onchange="setR('experience',Number(this.value)||0)"></div><div><label>Function</label><input value="${escapeHtml(n.rewards.function||"")}" placeholder="namespace:mi_funcion" onchange="setR('function',this.value)"></div></div>
- <label>Loot tables (una por línea)</label><textarea onchange="setR('loot',this.value.split(/\\n/).map(x=>x.trim()).filter(Boolean))">${escapeHtml((n.rewards.loot||[]).join("\\n"))}</textarea>
- <label>Recipes (una por línea)</label><textarea onchange="setR('recipes',this.value.split(/\\n/).map(x=>x.trim()).filter(Boolean))">${escapeHtml((n.rewards.recipes||[]).join("\\n"))}</textarea>
- <div class="toolbar"><button onclick="duplicateNode()">Duplicar</button><button class="danger" onclick="deleteNode()">Eliminar</button></div>`;
-}
-function criterionHtml(n,c,i){
- return `<div class="card criterion">
- <div class="row"><div><label>Nombre del criterio</label><input value="${escapeHtml(c.id)}" onchange="critSet(${i},'id',this.value)"></div><button class="danger" type="button" onclick="critDel(${i})">×</button></div>
- <div class="param-panel"><b>🎯 Trigger</b><div class="small"><code>minecraft:${escapeHtml(c.trigger)}</code> — ${escapeHtml(triggerLabel(c.trigger))}</div><button type="button" onclick="focusTriggerPicker()">▾ Elegir otro trigger</button></div>
- ${conditionFields(c.trigger,c.conditions,i)}
- <label>Conditions JSON avanzado (opcional)</label><textarea onchange="critJson(${i},this.value)" placeholder='{"item":{"items":["minecraft:diamond"]}}'>${escapeHtml(JSON.stringify(c.conditions||{},null,2))}</textarea></div>`;
-}
-function focusTriggerPicker(){
- const el=document.getElementById("triggerList"); if(!el)return;
- el.scrollIntoView({behavior:"smooth",block:"start"});
- el.querySelectorAll("details").forEach(d=>{if(d.querySelector(".selected"))d.open=true});
-}
-function conditionFields(tr,co,ci){
- const v=(k,d="")=>escapeHtml(co[k]??d);
- const ev=k=>`onchange="conditionSet(${ci},'${k}',this.value)"`;
- const text=(key,label,placeholder,help="")=>`<div><label>${label}</label><input value="${v(key)}" placeholder="${placeholder}" ${ev(key)}>${help?`<div class="param-help">${help}</div>`:""}</div>`;
- const num=(key,label,placeholder="",help="")=>`<div><label>${label}</label><input type="number" step="any" value="${v(key)}" placeholder="${placeholder}" ${ev(key)}>${help?`<div class="param-help">${help}</div>`:""}</div>`;
- const range=(key,label,help="")=>`<div class="param-panel"><b>${label}</b><div class="param-row">${num(key+"_min","Mínimo","opcional")}${num(key+"_max","Máximo","opcional")}</div>${help?`<div class="param-help">${help}</div>`:""}</div>`;
- const info=(title,body)=>`<div class="param-panel"><b>${title}</b><div class="param-help">${body}</div></div>`;
- const item=()=>`<div class="param-panel"><b>📦 Objeto</b><div class="param-row"><div><label>ID del objeto</label><input placeholder="minecraft:diamond" value="${v("_item")}" ${ev("_item")}></div><div><label>Cantidad mínima</label><input type="number" min="0" placeholder="1" value="${v("_count_min")}" ${ev("_count_min")}></div></div><div class="param-help">Podés poner un ID como <code>minecraft:diamond</code>. Para componentes o predicates complejos está el JSON avanzado.</div><button type="button" onclick="itemPresetFor(${ci})">Aplicar objeto</button></div>`;
- const entity=()=>`<div class="param-panel"><b>🧟 Entidad</b><div class="param-row"><div><label>Tipo de entidad</label><input placeholder="minecraft:zombie" value="${v("_entity_type")}" ${ev("_entity_type")}></div><div><label>Distancia máxima</label><input type="number" min="0" placeholder="20" value="${v("_distance_max")}" ${ev("_distance_max")}></div></div><div class="param-help">Ejemplo: <code>minecraft:zombie</code> o un tag. Dejá vacío para cualquier entidad.</div><button type="button" onclick="entityPresetFor(${ci})">Aplicar entidad</button></div>`;
- const block=(label="Bloque")=>`<div class="param-panel"><b>🧱 ${label}</b>${text("_block","ID del bloque","minecraft:honey_block","Podés usar un ID de bloque. Para estados y predicates complejos, JSON avanzado.")}<button type="button" onclick="blockPresetFor(${ci})">Aplicar bloque</button></div>`;
- const distance=()=>`<div class="param-panel"><b>📏 Distancia</b><div class="param-row">${range("_horizontal","Horizontal","Distancia X/Z.")}${range("_absolute","Absoluta","Distancia 3D.")}</div><div class="param-row">${range("_x","Eje X")}${range("_y","Eje Y")}</div>${range("_z","Eje Z")}</div>`;
- const damage=()=>`<div class="param-panel"><b>💥 Daño</b><div class="param-row">${range("_damage_dealt","Daño causado")}${range("_damage_taken","Daño recibido")}</div>${text("_damage_type","Tipo de daño","minecraft:arrow")}</div>`;
- const easy=()=>`<div class="help"><b>🧠 Modo fácil:</b> el trigger es el evento y estos campos son los filtros. <b>Vacío = no filtrar.</b> La aplicación convierte estos campos al JSON de Minecraft 1.21.1.</div>`;
-
- if(tr==="location") return locationBuilder(co,ci);
- if(["inventory_changed","consume_item","enchanted_item","filled_bucket","item_durability_changed","using_item","used_totem"].includes(tr))
-   return easy()+item()+(tr==="enchanted_item"?range("_levels","Niveles gastados"):tr==="item_durability_changed"?`${range("_durability","Durabilidad")}${range("_delta","Cambio de durabilidad")}`:"");
- if(["player_killed_entity","player_hurt_entity","player_interacted_with_entity","entity_killed_player","entity_hurt_player","summoned_entity","tame_animal"].includes(tr))
-   return easy()+entity()+(["player_killed_entity","player_hurt_entity","entity_hurt_player"].includes(tr)?damage():"");
- if(tr==="changed_dimension")return easy()+`<div class="param-panel"><b>🌀 Cambio de dimensión</b><div class="param-row"><div><label>Desde</label><select ${ev("_from")}><option value="">Cualquiera</option><option value="minecraft:overworld" ${v("_from")==="minecraft:overworld"?"selected":""}>Overworld</option><option value="minecraft:the_nether" ${v("_from")==="minecraft:the_nether"?"selected":""}>Nether</option><option value="minecraft:the_end" ${v("_from")==="minecraft:the_end"?"selected":""}>End</option></select></div><div><label>Hacia</label><select ${ev("_to")}><option value="">Cualquiera</option><option value="minecraft:overworld" ${v("_to")==="minecraft:overworld"?"selected":""}>Overworld</option><option value="minecraft:the_nether" ${v("_to")==="minecraft:the_nether"?"selected":""}>Nether</option><option value="minecraft:the_end" ${v("_to")==="minecraft:the_end"?"selected":""}>End</option></select></div></div><div class="param-help">Ejemplo: Overworld → Nether.</div></div>`;
- if(["nether_travel","fall_from_height","ride_entity_in_lava"].includes(tr))
-   return easy()+locationBuilder(co,ci)+distance();
- if(tr==="fall_after_explosion")return easy()+locationBuilder(co,ci)+distance()+entity();
- if(["slept_in_bed","hero_of_the_village"].includes(tr))return easy()+locationBuilder(co,ci);
- if(tr==="construct_beacon")return easy()+range("_level","Nivel del beacon","0–4. Si dejás vacío, cualquier nivel.");
- if(["recipe_crafted","crafter_recipe_crafted"].includes(tr))return easy()+text("recipe_id","ID de receta","minecraft:iron_pickaxe","En 1.21.1 el campo es <code>recipe_id</code>.");
- if(tr==="recipe_unlocked")return easy()+text("recipe","ID de receta","minecraft:iron_pickaxe");
- if(tr==="brewed_potion")return easy()+text("potion","Poción resultante","minecraft:strength");
- if(tr==="player_generates_container_loot")return easy()+text("loot_table","Loot table","minecraft:chests/simple_dungeon");
- if(tr==="effects_changed")return easy()+text("_effect","Efecto","minecraft:speed","Podés ampliar efectos en JSON avanzado.")+entity();
- if(tr==="target_hit")return easy()+range("_signal_strength","Fuerza de señal","0–15.")+item();
- if(tr==="shot_crossbow")return easy()+item();
- if(tr==="killed_by_crossbow")return easy()+entity()+range("_unique_entity_types","Tipos de entidad únicos");
- if(tr==="levitation")return easy()+range("_duration","Tiempo","20 ticks = 1 segundo.")+distance();
- if(tr==="bee_nest_destroyed")return easy()+block("Nido o colmena")+item()+range("_bees_inside","Abejas dentro");
- if(["enter_block","slide_down_block"].includes(tr))return easy()+block();
- if(["placed_block","item_used_on_block","allay_drop_item_on_block","default_block_use","any_block_use"].includes(tr))return easy()+locationBuilder(co,ci)+item();
- if(tr==="channeled_lightning")return easy()+entity();
- if(tr==="lightning_strike")return easy()+entity();
- if(tr==="fishing_rod_hooked")return easy()+item()+entity();
- if(tr==="bred_animals")return easy()+entity()+info("🐄 Tres posibilidades","Podés distinguir progenitor, pareja y cría desde JSON avanzado si necesitás que sean distintos.");
- if(tr==="cured_zombie_villager")return easy()+entity();
- if(tr==="villager_trade")return easy()+entity()+item();
- if(["raid_omen","raid_win","hero_of_the_village","avoid_vibration","used_ender_eye","started_riding","tick"].includes(tr))
-   return easy()+info("ℹ️ Este trigger no necesita parámetros obligatorios","Podés usarlo tal cual. Si querés limitarlo por ubicación o propiedades del jugador, el JSON avanzado permite agregar el predicado.");
- if(tr==="impossible")return `<div class="warn"><b>🚫 No tiene parámetros.</b><br>Este criterio nunca se activa por gameplay. Se concede con <code>/advancement grant</code>.</div>`;
- if(["thrown_item_picked_up_by_player","thrown_item_picked_up_by_entity"].includes(tr))return easy()+item()+entity();
- return easy()+info("⚙️ Sin filtros fáciles específicos","El evento puede funcionar sin parámetros. El JSON avanzado queda disponible para filtros especializados.");
-}
-function locationBuilder(co,ci){
- const n=(k,d="")=>co[k]??d;
- const num=(k,d="")=>escapeHtml(n(k,d));
- const mode=n("_loc_mode","box");
- const dim=n("_dimension","");
- const biome=n("_biome","");
- const structure=n("_structure","");
- const axis=(a,label)=>`<div><label>${label}</label><div class="param-row"><input type="number" step="any" placeholder="mín" value="${num("_min_"+a)}" onchange="locationSet(${ci},'_min_${a}',this.value)"><input type="number" step="any" placeholder="máx" value="${num("_max_"+a)}" onchange="locationSet(${ci},'_max_${a}',this.value)"></div></div>`;
- const modeHelp=mode==="block"?"Detecta la celda de bloque completa. Si ponés X=100, genera 100 ≤ X < 101. Es lo más cómodo para una coordenada de bloque.":mode==="around"?"Poné un centro y un margen. Por ejemplo centro 100,64,-20 y margen 2 genera X 98–102, Y 62–66 y Z -22–-18.":"Definí una caja: mínimo y máximo para cada eje. Ejemplo: X 100–120, Y 60–80, Z -30–-10.";
- const modeFields=mode==="block"?`<div class="param-row"><div><label>X del bloque</label><input type="number" step="1" value="${num("_cx")}" placeholder="100" onchange="locationSet(${ci},'_cx',this.value)"></div><div><label>Y del bloque</label><input type="number" step="1" value="${num("_cy")}" placeholder="64" onchange="locationSet(${ci},'_cy',this.value)"></div></div><div class="param-row"><div><label>Z del bloque</label><input type="number" step="1" value="${num("_cz")}" placeholder="-20" onchange="locationSet(${ci},'_cz',this.value)"></div><div><label>Margen</label><input value="0" disabled><span class="param-help">El bloque ya ocupa 1×1×1.</span></div></div>`:mode==="around"?`<div class="param-row"><div><label>Centro X</label><input type="number" step="any" value="${num("_cx")}" placeholder="100" onchange="locationSet(${ci},'_cx',this.value)"></div><div><label>Centro Y</label><input type="number" step="any" value="${num("_cy")}" placeholder="64" onchange="locationSet(${ci},'_cy',this.value)"></div></div><div class="param-row"><div><label>Centro Z</label><input type="number" step="any" value="${num("_cz")}" placeholder="-20" onchange="locationSet(${ci},'_cz',this.value)"></div><div><label>± Margen</label><input type="number" step="any" min="0" value="${num("_radius","2")}" onchange="locationSet(${ci},'_radius',this.value)"></div></div>`:`<div class="param-row">${axis("x","X")}${axis("y","Y")}</div><div class="param-row">${axis("z","Z")}</div>`;
- return `<div class="param-panel location-builder"><div class="row"><div><b>📍 ¿Dónde tiene que estar el jugador?</b><div class="param-help">Este trigger se revisa aproximadamente una vez por segundo. No necesitás escribir JSON para las coordenadas.</div></div><span class="pill">minecraft:location</span></div>
- <label>Forma de definir la zona</label><select onchange="locationMode(${ci},this.value)"><option value="box" ${mode==="box"?"selected":""}>📦 Caja: mínimo y máximo</option><option value="around" ${mode==="around"?"selected":""}>⭕ Centro ± margen</option><option value="block" ${mode==="block"?"selected":""}>🧱 Un bloque / coordenada de bloque</option></select>
- <div class="param-help"><b>${modeHelp}</b></div>${modeFields}
- <div class="param-row"><div><label>Dimensión (opcional)</label><select onchange="locationSet(${ci},'_dimension',this.value)"><option value="">Cualquiera</option><option value="minecraft:overworld" ${dim==="minecraft:overworld"?"selected":""}>Overworld</option><option value="minecraft:the_nether" ${dim==="minecraft:the_nether"?"selected":""}>Nether</option><option value="minecraft:the_end" ${dim==="minecraft:the_end"?"selected":""}>End</option></select></div><div><label>Bioma (opcional)</label><input placeholder="minecraft:plains" value="${escapeHtml(biome)}" onchange="locationSet(${ci},'_biome',this.value)"></div></div>
- <label>Estructura (opcional)</label><input placeholder="minecraft:trial_chambers" value="${escapeHtml(structure)}" onchange="locationSet(${ci},'_structure',this.value)">
- <div class="help"><b>💡 ¿Qué significa?</b><br>• <b>Caja</b>: entrás en cualquier punto dentro de esa zona.<br>• <b>Centro ± margen</b>: ideal para “X 100 ± 2, Y 64 ± 2, Z -20 ± 2”.<br>• <b>Un bloque</b>: ideal para “cuando esté en el bloque 100 64 -20”.<br><br>Las coordenadas se convierten automáticamente al formato que Minecraft 1.21.1 espera.</div>
- <button type="button" onclick="locationClear(${ci})">Limpiar ubicación</button></div>`;
-}
-function locationSet(i,k,v){let c=selected()?.criteria[i];if(!c)return;c.conditions[k]=v;render()}
-function locationMode(i,m){let c=selected()?.criteria[i];if(!c)return;c.conditions._loc_mode=m;render()}
-function locationClear(i){let c=selected()?.criteria[i];if(!c)return;Object.keys(c.conditions).filter(k=>k.startsWith("_")).forEach(k=>delete c.conditions[k]);delete c.conditions.player;delete c.conditions.dimension;delete c.conditions.biomes;delete c.conditions.structures;delete c.conditions.position;render()}
-function buildLocationConditions(co){
- const loc={};
- const dim=co._dimension?.trim(); const biome=co._biome?.trim(); const structure=co._structure?.trim();
- if(dim)loc.dimension=dim; if(biome)loc.biomes=biome; if(structure)loc.structures=structure;
- const mode=co._loc_mode||"box";
- const range=(min,max)=>{let o={}; if(min!==""&&min!=null&&!Number.isNaN(Number(min)))o.min=Number(min); if(max!==""&&max!=null&&!Number.isNaN(Number(max)))o.max=Number(max); return Object.keys(o).length===1&&o.min!==undefined&&o.max===undefined?o.min:o};
- if(mode==="around"){
-   const r=Math.abs(Number(co._radius||0)); for(const a of ["x","y","z"]){const c=Number(co["_c"+a]);if(Number.isFinite(c)){loc.position??={};loc.position[a]={min:c-r,max:c+r}}}
- } else if(mode==="block"){
-   for(const a of ["x","y","z"]){const c=Number(co["_c"+a]);if(Number.isFinite(c)){loc.position??={};loc.position[a]={min:c,max:c+1}}}
- } else {
-   for(const a of ["x","y","z"]){const r=range(co["_min_"+a],co["_max_"+a]);if(Object.keys(r).length||typeof r!=="object") {loc.position??={};loc.position[a]=r}}
- }
- const has=Object.keys(loc).length>0;
- if(!has)return null;
- return {player:[{condition:"minecraft:entity_properties",entity:"this",predicate:{location:loc}}]};
-}
-function jsonFor(n){
- const o={};
- if(n.parent){
-   const p=state.nodes.find(x=>x.id===n.parent);
-   if(p)o.parent="__NAMESPACE__:"+p.name;
- }
- o.display={title:{text:n.display.title||""},description:{text:n.display.description||""},icon:{id:n.display.icon||"minecraft:stone"},frame:n.display.frame||"task",show_toast:n.display.show_toast!==false,announce_to_chat:n.display.announce_to_chat!==false,hidden:n.display.hidden===true};
- if(n.root&&n.display.background)o.display.background=n.display.background;
- o.criteria={};
- for(const c of n.criteria){let conditions=JSON.parse(JSON.stringify(c.conditions||{}));
-   if(c.trigger==="location"){
-     Object.keys(conditions).filter(k=>k.startsWith("_")).forEach(k=>delete conditions[k]);
-     const built=buildLocationConditions(c.conditions||{}); conditions=built||{};
-     if(!built)conditions={};
-   }
-   o.criteria[c.id]={trigger:"minecraft:"+c.trigger}; if(Object.keys(conditions).length)o.criteria[c.id].conditions=conditions;
- }
- if(n.requirements?.length)o.requirements=n.requirements.map(g=>g.filter(Boolean));
- if(n.rewards&&Object.keys(n.rewards).length){o.rewards={};if(n.rewards.experience)o.rewards.experience=n.rewards.experience;if(n.rewards.function)o.rewards.function=n.rewards.function;if(n.rewards.loot?.length)o.rewards.loot=n.rewards.loot;if(n.rewards.recipes?.length)o.rewards.recipes=n.rewards.recipes}
- return o;
-}
-function conditionSet(i,k,v){let c=selected()?.criteria[i];if(!c)return;if(v==="")delete c.conditions[k];else c.conditions[k]=v;selected().saved=false;schedulePersist();render()}
-function itemPresetFor(i){let c=selected()?.criteria[i];if(!c)return;let x=c.conditions._item;if(x){delete c.conditions._item;c.conditions.item={items:[x]}}if(c.conditions._count_min!==""){c.conditions.count={min:Number(c.conditions._count_min)||0};delete c.conditions._count_min}render()}
-function entityPresetFor(i){let c=selected()?.criteria[i];if(!c)return;let x=c.conditions._entity_type;if(x){delete c.conditions._entity_type;c.conditions.entity={type:x}}if(c.conditions._distance_max!==""){c.conditions.distance={max:Number(c.conditions._distance_max)||0};delete c.conditions._distance_max}render()}
-function blockPresetFor(i){
- let c=selected()?.criteria[i];if(!c)return;
- const x=c.conditions._block;
- if(x){delete c.conditions._block;c.conditions.block=x}
- render();
-}
-let saveTimer=null;
-function schedulePersist(){
- clearTimeout(saveTimer);
- saveTimer=setTimeout(()=>persistState(),350);
-}
-function setN(k,v){selected()[k]=v;selected().saved=false;schedulePersist();render()}
-function setD(k,v){selected().display[k]=v;selected().saved=false;schedulePersist();render()}
-function setR(k,v){selected().rewards[k]=v;selected().saved=false;schedulePersist();render()}
-function critSet(i,k,v){selected().criteria[i][k]=v;if(k==="trigger")selected().criteria[i].conditions={};selected().saved=false;schedulePersist();render()}
-function critJson(i,s){try{selected().criteria[i].conditions=JSON.parse(s);selected().saved=false;schedulePersist();render()}catch(e){}}
-function tempCond(k,v){let c=selected().criteria.at(-1);if(c){c.conditions[k]=v;render()}}
-function itemPreset(){let c=selected().criteria.at(-1),x=c.conditions._item;if(x){delete c.conditions._item;c.conditions.item={items:[x]};render()}}
-function critDel(i){let n=selected(),cid=n.criteria[i].id;n.criteria.splice(i,1);n.requirements=n.requirements.map(g=>g.filter(x=>x!==cid)).filter(g=>g.length);render()}
-function reqAdd(i){selected().requirements[i].push(selected().criteria[0]?.id||"");selected().saved=false;schedulePersist();render()}function reqDel(i){selected().requirements.splice(i,1);selected().saved=false;schedulePersist();render()}
-function reqChange(i,old,v){let g=selected().requirements[i],p=g.indexOf(old);if(p>=0)g[p]=v;selected().saved=false;schedulePersist();render()}
-function duplicateNode(){let n=selected(),x=JSON.parse(JSON.stringify(n));x.id=id();x.name=n.name+"_copy";x.parent=n.parent;x.saved=false;state.nodes.push(x);state.selected=x.id;schedulePersist();render()}
-function deleteNode(){let n=selected();if(!n)return;let children=state.nodes.filter(x=>x.parent===n.id);if(children.length&&!confirm("Tiene hijos. También se desvincularán. ¿Eliminar?"))return;state.nodes=state.nodes.filter(x=>x.id!==n.id);state.nodes.forEach(x=>{if(x.parent===n.id)x.parent=null});state.selected=state.nodes[0]?.id||null;schedulePersist();render()}
-function treeHtml(){
- if(!state.nodes.length)return `<div class="empty">No hay árbol todavía.</div>`;
- const roots=state.nodes.filter(n=>n.root||!n.parent);
- const levels={}; const walk=(n,l=0)=>{(levels[l]??=[]).push(n);state.nodes.filter(x=>x.parent===n.id).forEach(c=>walk(c,l+1))};roots.forEach(r=>walk(r,0));
- const pos={}; Object.entries(levels).forEach(([l,arr])=>{
-   const level=Number(l), gap=270, total=(arr.length-1)*gap;
-   arr.forEach((n,i)=>{if(!n.pos||typeof n.pos.x!=="number"||!n.pos._visual) n.pos={x:900-total/2+i*gap,y:100+level*210,_visual:true};pos[n.id]=n.pos});
- });
- const links=state.nodes.filter(n=>n.parent&&pos[n.parent]).map(n=>{
-   const p=pos[n.parent],c=pos[n.id],x1=p.x+115,y1=p.y+105,x2=c.x+115,y2=c.y;
-   const mid=(y1+y2)/2;
-   return `<path class="tree-link ${n.id===state.selected||n.parent===state.selected?"selected":""}" d="M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}"/>`;
- }).join("");
- const iconChar=n=>n.display.icon?.includes("diamond")?"◆":n.display.icon?.includes("sword")?"⚔":n.display.icon?.includes("apple")?"🍎":n.root?"🌳":"🏆";
- const cards=state.nodes.map(n=>{let q=pos[n.id];let cls=`adv-node ${n.root?"root":n.display.frame||"task"} ${n.id===state.selected?"selected":""} ${n.pinned?"pinned-node":""}`;
- return `<div class="${cls}" data-id="${n.id}" style="left:${q.x}px;top:${q.y}px" onclick="selectNode('${n.id}')" onpointerdown="startNodeDrag(event,'${n.id}')">
-   <div class="adv-icon">${iconChar(n)}</div><div class="adv-title">${n.pinned?"📌 ":""}${escapeHtml(n.display.title||n.name)}</div>
-   <div class="adv-file">${escapeHtml(n.name)} · ${n.root?"ROOT":"PARENT"}</div>
-   <div class="adv-desc">${escapeHtml(n.display.description||"")}</div>
-   <div class="adv-pills"><span class="pill">${n.criteria.length} criterios</span><span class="pill">${n.requirements.length} grupos</span></div>
- </div>`}).join("");
- return `<h2>🌳 Árbol visual</h2>
- <div class="tree-toolbar">
-   <button onclick="treeZoom(-.1)">−</button><span id="zoomLabel" class="zoom-label">100%</span><button onclick="treeZoom(.1)">＋</button>
-   <button onclick="treeResetView()">🎯 Centrar</button><button onclick="treeAutoLayout()">✨ Ordenar</button>
-   <span class="small">Arrastrá los nodos. 📌 Fijado = queda marcado en el árbol. 💾 Guardado = queda almacenado en este navegador.</span>
- </div>
- <div id="treeWrap" class="tree-wrap">
-   <div id="treeCanvas" class="tree-canvas"><div class="tree-grid"></div><svg class="tree-links">${links}</svg>${cards}</div>
- </div>`;
-}
-function selectNode(id){state.selected=id;render()}
-let treeView={scale:1,x:0,y:0,pan:false,px:0,py:0};
-function applyTreeView(){let c=document.getElementById("treeCanvas");if(!c)return;c.style.transform=`translate(${treeView.x}px,${treeView.y}px) scale(${treeView.scale})`;let z=document.getElementById("zoomLabel");if(z)z.textContent=Math.round(treeView.scale*100)+"%";}
-function treeZoom(d){treeView.scale=Math.max(.45,Math.min(1.8,treeView.scale+d));applyTreeView()}
-function treeResetView(){treeView={scale:1,x:0,y:0,pan:false,px:0,py:0};applyTreeView()}
-function treeAutoLayout(){state.nodes.forEach(n=>n.pos={x:0,y:0});render()}
-function startNodeDrag(e,nid){
- if(e.button!==0)return;e.stopPropagation();
- const wrap=document.getElementById("treeWrap"),n=state.nodes.find(x=>x.id===nid),startX=e.clientX,startY=e.clientY,ox=n.pos.x,oy=n.pos.y;
- function move(ev){n.pos.x=ox+(ev.clientX-startX)/treeView.scale;n.pos.y=oy+(ev.clientY-startY)/treeView.scale;state.selected=nid;updateTreePositions()}
- function up(){window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up)}
- window.addEventListener("pointermove",move);window.addEventListener("pointerup",up);
-}
-function updateTreePositions(){
- const c=document.getElementById("treeCanvas");if(!c)return;
- state.nodes.forEach(n=>{let el=c.querySelector(`[data-id="${CSS.escape(n.id)}"]`);if(el){el.style.left=n.pos.x+"px";el.style.top=n.pos.y+"px"}});
- const svg=c.querySelector(".tree-links");if(!svg)return;
- svg.innerHTML=state.nodes.filter(n=>n.parent).map(n=>{let p=state.nodes.find(x=>x.id===n.parent);if(!p)return "";let x1=p.pos.x+115,y1=p.pos.y+105,x2=n.pos.x+115,y2=n.pos.y,mid=(y1+y2)/2;return `<path class="tree-link ${n.id===state.selected||n.parent===state.selected?"selected":""}" d="M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}"/>`}).join("");
- applyTreeView();
-}
-document.addEventListener("pointerdown",e=>{
- const w=e.target.closest("#treeWrap");if(!w||e.target.closest(".adv-node"))return;
- treeView.pan=true;treeView.px=e.clientX;treeView.py=e.clientY;w.classList.add("grabbing");
- const move=ev=>{if(!treeView.pan)return;treeView.x+=ev.clientX-treeView.px;treeView.y+=ev.clientY-treeView.py;treeView.px=ev.clientX;treeView.py=ev.clientY;applyTreeView()};
- const up=()=>{treeView.pan=false;w.classList.remove("grabbing");window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up)};
- window.addEventListener("pointermove",move);window.addEventListener("pointerup",up);
-});
-function jsonHtml(){
- let n=selected();if(!n)return `<div class="empty">Seleccioná un advancement.</div>`;
- let o=jsonFor(n);return `<h2>JSON de ${escapeHtml(n.name)}</h2><div class="warn">El exportador reemplaza automáticamente el namespace. Los archivos están pensados para <b>Fabric 1.21.1</b> y siguen la estructura estándar de advancements de Minecraft.</div><div class="toolbar"><button onclick="copyText(JSON.stringify(jsonFor(selected()),null,2))">Copiar JSON</button><button onclick="downloadSelected()">Descargar .json</button><button onclick="downloadPack()">📦 Descargar ZIP</button></div><div class="code"><pre>${escapeHtml(JSON.stringify(o,null,2))}</pre></div>`;
-}
-function helpHtml(){return `<h2>Cómo funciona la criatura</h2>
-<div class="help"><b>criterion</b> = evento + conditions. <b>requirements</b> = lógica. <b>parent</b> = jerarquía. <b>display</b> = cómo aparece. <b>rewards</b> = qué entrega al completarse.</div>
-<h3>AND / OR</h3><p><code>[["A","B"],["C"]]</code> significa <b>(A AND B) OR C</b>. Cada array interno exige todos sus criterios; los arrays externos son alternativas.</p>
-<h3>Root</h3><p>Un root no tiene <code>parent</code> y define el fondo de la pestaña. Los hijos apuntan al ID del advancement padre.</p>
-<h3>Conditions</h3><p>El editor rápido cubre los casos comunes. El área JSON avanzado existe para predicates complejos: items, entities, location, effects, distance, damage, NBT/components y similares.</p>
-<h3>1.21.1</h3><p>La herramienta conserva diferencias importantes de versión. Por ejemplo, <code>recipe_crafted</code> usa <code>recipe_id</code>, y <code>killed_by_crossbow</code> todavía conserva ese nombre en 1.21.1.</p>
-<h3>Estructura de datapack</h3><pre>mi_pack/
-└─ data/
-   └─ mi_namespace/
-      └─ advancement/
-         ├─ root.json
-         ├─ primer_paso.json
-         └─ rama/
-            └─ segundo_paso.json</pre>
-</div>`}
-function showTab(t){state.tab=t;["tree","json","help"].forEach(x=>document.getElementById("tab"+x[0].toUpperCase()+x.slice(1)).classList.toggle("active",x===t));render()}
-function copyText(s){navigator.clipboard?.writeText(s);alert("Copiado.")}
-function setJsonParent(o,nodes){
- if(o.parent&&o.parent.startsWith("__NAMESPACE__:")){let p=o.parent.split(":").slice(1).join(":");let pn=nodes.find(x=>x.id===p);o.parent=pn?`__NS__:${pn.name}`:o.parent}
- return o;
-}
-async function exportFolder(){
-  if(!window.showDirectoryPicker){
-    alert("Tu navegador no permite seleccionar una carpeta directamente. Usá Chrome/Edge en PC, o descargá los JSON individualmente.");
-    return;
-  }
-  if(!state.nodes.length){ alert("No hay advancements para exportar."); return; }
-  let ns=prompt("Namespace del datapack/mod","ggg");
-  if(!ns)return;
-  if(!/^[a-z0-9_.-]+$/.test(ns)){alert("Namespace inválido. Usá minúsculas, números, _ . o -.");return;}
-  try{
-    const root=await window.showDirectoryPicker({mode:"readwrite"});
-    const data=await root.getDirectoryHandle("data",{create:true});
-    const nsDir=await data.getDirectoryHandle(ns,{create:true});
-    const advDir=await nsDir.getDirectoryHandle("advancement",{create:true});
-
-    for(const n of state.nodes){
-      const parts=n.name.split("/").filter(Boolean);
-      let dir=advDir;
-      for(let i=0;i<parts.length-1;i++) dir=await dir.getDirectoryHandle(parts[i],{create:true});
-      const file=parts.at(-1)+".json";
-      const fh=await dir.getFileHandle(file,{create:true});
-      const writable=await fh.createWritable();
-      await writable.write(JSON.stringify(jsonFor(n),null,2).replaceAll("__NAMESPACE__",ns));
-      await writable.close();
-    }
-
-    const meta=await root.getFileHandle("pack.mcmeta",{create:true});
-    const mw=await meta.createWritable();
-    await mw.write(JSON.stringify({pack:{pack_format:48,description:`Advancement Studio — ${ns} — Minecraft Java 1.21.1`}},null,2));
-    await mw.close();
-
-    const readme=await root.getFileHandle("README_Advancements.txt",{create:true});
-    const w=await readme.createWritable();
-    await w.write(
-`Advancement Studio — Fabric 1.21.1
-
-Namespace: ${ns}
-Advancements exportados: ${state.nodes.length}
-
-Ruta:
-data/${ns}/advancement/
-
-Los archivos conservan las relaciones parent entre sí.
-Esta carpeta puede copiarse dentro de un datapack o utilizarse como referencia para recursos de un mod Fabric.
-`);
-    await w.close();
-    alert("¡Carpeta exportada! Se creó data/"+ns+"/advancement/ con "+state.nodes.length+" advancement(s).");
-  }catch(e){
-    if(e.name!=="AbortError") alert("No se pudo exportar la carpeta: "+e.message);
-  }
-}
-
-function downloadSelected(){let n=selected();let o=jsonFor(n);let text=JSON.stringify(o,null,2).replaceAll("__NAMESPACE__","TU_NAMESPACE");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"application/json"}));a.download=n.name+".json";a.click()}
-function crc32(bytes){
- let c=0xffffffff;
- for(let i=0;i<bytes.length;i++){c^=bytes[i];for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0);}
- return (c^0xffffffff)>>>0;
-}
-function u16(n){return new Uint8Array([n&255,(n>>>8)&255])}
-function u32(n){return new Uint8Array([n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255])}
-function cat(...parts){let n=parts.reduce((a,b)=>a+b.length,0),o=new Uint8Array(n),p=0;for(const b of parts){o.set(b,p);p+=b.length}return o}
-function makeZip(files){
- const enc=new TextEncoder(), locals=[], centrals=[];let offset=0;
- for(const f of files){
-   const name=enc.encode(f.path), data=enc.encode(f.text), crc=crc32(data);
-   const local=cat(new Uint8Array([80,75,3,4]),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),name,data);
-   locals.push(local);
-   const central=cat(new Uint8Array([80,75,1,2]),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name);
-   centrals.push(central);offset+=local.length;
- }
- const body=cat(...locals), directory=cat(...centrals);
- const endrec=cat(new Uint8Array([80,75,5,6]),u16(0),u16(0),u16(files.length),u16(files.length),u32(directory.length),u32(body.length),u16(0));
- return cat(body,directory,endrec);
-}
-function downloadBlob(blob,name){
- const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
- setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
-}
-async function downloadPack(){
- if(!state.nodes.length){alert("No hay advancements para exportar.");return}
- let ns=prompt("Namespace del proyecto","ggg");if(!ns)return;
- if(!/^[a-z0-9_.-]+$/.test(ns)){alert("Namespace inválido. Usá minúsculas, números, _ . o -.");return}
- const files=state.nodes.map(n=>({
-   path:`data/${ns}/advancement/${n.name}.json`,
-   text:JSON.stringify(jsonFor(n),null,2).replaceAll("__NAMESPACE__",ns)
- }));
- files.unshift({
-   path:"pack.mcmeta",
-   text:JSON.stringify({pack:{pack_format:48,description:`Advancement Studio — ${ns} — Minecraft Java 1.21.1`}},null,2)
- });
- files.push({
-   path:"README_Advancements.txt",
-   text:`Advancement Studio — Fabric 1.21.1\nNamespace: ${ns}\nAdvancements: ${state.nodes.length}\n\nRuta: data/${ns}/advancement/\nPack format: 48\n`
- });
- const zip=makeZip(files);
- downloadBlob(new Blob([zip],{type:"application/zip"}),`${ns}_advancements.zip`);
-}
-(function boot(){
- try{
-   const raw=localStorage.getItem(STORAGE_KEY);
-   if(raw){
-     const data=JSON.parse(raw);
-     if(Array.isArray(data.nodes)&&data.nodes.length){
-       state.nodes=data.nodes;state.selected=data.selected||data.nodes[0].id;state.tab=data.tab||"tree";
-       state.nodes.forEach(n=>{if(n.saved==null)n.saved=true;if(n.pinned==null)n.pinned=false});
-       render();return;
-     }
-   }
- }catch(e){}
- newAdv();
-})();
-</script>
-</body>
-</html>
+function advanced(c,i){return `<details><summary>🧾 Conditions JSON avanzado</summary><textarea onchange="adv(${i},this.value)">${esc(JSON.stringify(c.conditions||{},null,2))}</textarea><div class="help">El JSON avanzado reemplaza las conditions. El validador comprobará las claves conocidas cuando exista una definición específica.</div></details>`}
+function adv(i,v){try{selected().criteria[i].conditions=JSON.parse(v);selected().saved=false;saveLocal();render()}catch(e){alert("JSON inválido")}}
+function criterion(c,i){return `<div class="param"><div class="top"><div><b>Criterio ${i+1}</b><div class="help">${esc(c.id)}</div></div><button onclick="delCriterion(${i})">🗑</button></div><div class="field"><label>Trigger</label><select onchange="changeTrigger(${i},this.value)">${TRIGGERS.map(t=>`<option value="${t[0]}" ${t[0]===c.trigger?"selected":""}>${GROUP[t[2]]} · ${t[1]}</option>`).join("")}</select></div>${condUI(c,i)}${advanced(c,i)}</div>`}
+function edit(){let n=selected();if(!n)return"";return `<div class="grid"><div class="panel sticky"><h2>📁 Ficha</h2>${field("Nombre de archivo",n.name,`rename(this.value)`,"Se exporta como .json. Minecraft 1.21.1 usará este nombre en el parent.")}<div class="field"><label>Parent</label><select onchange="setParent(this.value)"><option value="">🌳 ROOT / sin parent</option>${state.nodes.filter(x=>x!==n).map(x=>`<option value="${x.id}" ${n.parent===x.id?"selected":""}>${esc(x.name)} — ${esc(x.display.title)}</option>`).join("")}</select></div><button class="primary" onclick="save()">💾 Guardar</button> <button onclick="addChild()">＋ Hijo</button> <button onclick="duplicate()">⧉ Duplicar</button> <button onclick="remove()">🗑</button><div class="param"><b>${n.saved?"🟢 Guardado":"🟡 Borrador"}</b><div class="help">El guardado persiste en este navegador.</div></div></div><div><div class="panel"><h2>🎨 Display</h2><div class="row">${field("Título",n.display.title,`setBasic('display.title',this.value)`)}${field("Icono",n.display.icon,`setBasic('display.icon',this.value)`,"1.21.1 usa icon.id.")}</div>${field("Descripción",n.display.description,`setBasic('display.description',this.value)`)}<div class="row"><div class="field"><label>Frame</label><select onchange="setBasic('display.frame',this.value)"><option ${n.display.frame==="task"?"selected":""}>task</option><option ${n.display.frame==="goal"?"selected":""}>goal</option><option ${n.display.frame==="challenge"?"selected":""}>challenge</option></select></div>${field("Background",n.display.background,`setBasic('display.background',this.value)`)}</div></div><div class="panel"><div class="top"><h2>🎯 Criteria</h2><button onclick="addCriterion()">＋ Criterio</button></div>${n.criteria.map(criterion).join("")}</div><div class="panel"><h2>🏆 Requirements</h2>${requirementsUI(n)}</div></div></div>`}
+function rename(v){let n=selected(),x=clean(v);if(state.nodes.some(o=>o!==n&&o.name===x))return alert("Nombre duplicado");n.name=x;n.saved=false;saveLocal();render()}
+function requirementsUI(n){return `<div class="help">Cada array interno es AND. Los arrays externos se combinan como OR. Ejemplo: [A,B] + [C] = (A AND B) OR C.</div>${n.requirements.map((g,i)=>`<div class="param"><b>Grupo ${i+1} (AND)</b>${g.map(id=>`<span class="badge">${esc(id)}</span>`).join(" ")} <button onclick="addReq(${i})">＋</button> <button onclick="delReq(${i})">🗑</button></div>`).join("")}<button onclick="addReqGroup()">＋ Grupo OR</button>`}
+function addReq(i){let n=selected();let ids=n.criteria.map(c=>c.id).filter(x=>!n.requirements.some(g=>g.includes(x)));if(ids[0])n.requirements[i].push(ids[0]);saveLocal();render()}
+function delReq(i){selected().requirements.splice(i,1);saveLocal();render()}
+function addReqGroup(){selected().requirements.push([]);saveLocal();render()}
+function tree(){let nodes="",links="";let roots=state.nodes.filter(n=>!n.parent);let levels={};function walk(n,l){(levels[l]??=[]).push(n);state.nodes.filter(x=>x.parent===n.id).forEach(c=>walk(c,l+1))}roots.forEach(r=>walk(r,0));Object.entries(levels).forEach(([l,a])=>a.forEach((n,i)=>n.pos={x:850+(i-(a.length-1)/2)*270,y:50+Number(l)*210}));state.nodes.forEach(n=>{if(n.parent){let p=parent(n);if(p)links+=`<line x1="${p.pos.x+110}" y1="${p.pos.y+135}" x2="${n.pos.x+110}" y2="${n.pos.y}" stroke="#60778e" stroke-width="3"/>`}nodes+=`<div class="node ${n.root?"root ":""}${n.id===state.sel?"sel":""}" style="left:${n.pos.x}px;top:${n.pos.y}px" onclick="sel('${n.id}')"><b>🌳 ${esc(n.display.title)}</b><div class="file">${esc(n.name)}.json</div><div class="help">${n.parent?"↳ "+esc(parent(n)?.name||""):"ROOT"}</div></div>`});return `<div class="panel"><div class="top"><div><h2>🌳 Árbol</h2><div class="help">El parent exportado siempre usa namespace:nombre_del_archivo, nunca el UUID interno.</div></div><div><button onclick="addChild()">＋ Hijo</button> <button onclick="tab('edit')">🛠 Ficha</button></div></div><div class="tree"><div class="canvas"><svg class="links" width="1800" height="1400">${links}</svg>${nodes}</div></div></div>`}
+function sel(id){state.sel=id;render()}
+function schemaTab(){return `<div class="panel"><h2>📜 La Biblia del generador</h2><p>Esta versión no toma como autoridad una lista inventada de campos. La referencia conceptual es <b>SpyglassMC/vanilla-mcdoc</b>, las definiciones de Minecraft que describen CODECs, JSON y NBT. El repositorio es MIT y sigue actualizado. </p><div class="param"><b>Fuente primaria del esquema</b><div class="help">vanilla-mcdoc / java/data/advancement/predicate.mcdoc. Ahí están ItemPredicate, BlockPredicate, LocationPredicate, EntityPredicate, MinMaxBounds y las reglas por versión. Por ejemplo: ItemPredicate post-1.20.5 usa items, count, components y predicates; LocationPredicate 1.21.1 usa position, biomes, structures, dimension, light, block, fluid, smokey y can_see_sky.</div></div><div class="param"><b>Regla de oro</b><div class="help">Si un campo no está respaldado por la definición 1.21.1, el editor no lo inventa. El modo manual permite pegar JSON, pero el validador lo marcará como manual cuando no tenga una regla específica incorporada.</div></div><div class="param"><b>Nota sobre SPGoding</b><div class="help">El repositorio SPGoding/datapack-json-schemas que encontramos está archivado y apunta a versiones antiguas; por eso no lo uso como fuente de verdad para 1.21.1.</div></div></div>`}
+function validate(){let out=[],names=new Set();if(!state.nodes.length)out.push(["bad","No hay advancements"]);state.nodes.forEach(n=>{if(names.has(n.name))out.push(["bad",`${n.name}: nombre duplicado`]);names.add(n.name);if(!/^[a-z0-9_./-]+$/.test(n.name))out.push(["bad",`${n.name}: el nombre debe ser lowercase/namespace-safe`]);if(n.parent&&!parent(n))out.push(["bad",`${n.name}: parent inexistente`]);if(!n.criteria.length)out.push(["warn",`${n.name}: no tiene criteria`]);let ids=new Set();n.criteria.forEach(c=>{if(ids.has(c.id))out.push(["bad",`${n.name}: criterion duplicado ${c.id}`]);ids.add(c.id);let td=TRIGGERS.find(t=>t[0]===c.trigger);if(!td)out.push(["bad",`${n.name}: trigger no definido`]);if(td&&Object.keys(c.conditions||{}).some(k=>!td[3].includes(k)))out.push(["bad",`${n.name}/${c.id}: '${Object.keys(c.conditions).find(k=>!td[3].includes(k))}' no está permitido por la definición guiada de este trigger`]);});let flat=n.requirements.flat();n.criteria.forEach(c=>{if(n.requirements.length&&!flat.includes(c.id))out.push(["warn",`${n.name}: ${c.id} no aparece en requirements`] )})});state.nodes.forEach(n=>{let seen=new Set(),c=n;while(c?.parent){if(seen.has(c.id)){out.push(["bad",`${n.name}: ciclo de parents`]);break}seen.add(c.id);c=parent(c)}});if(!out.length)out.push(["ok","La estructura básica y las reglas guiadas conocidas están correctas."]);return out}
+function val(){let v=validate();return `<div class="panel"><h2>🔍 Validador</h2><div class="help">No promete “Minecraft lo acepta” si el formulario no tiene la definición específica. Las zonas manuales quedan identificadas como tales. La fuente de tipos es la definición vanilla-mcdoc.</div><div class="validation">${v.map(x=>`<div class="v ${x[0]}">${x[0]==="ok"?"✅":x[0]==="bad"?"❌":"⚠️"} ${esc(x[1])}</div>`).join("")}</div><div class="param"><b>JSON exportable del seleccionado</b><pre class="json">${esc(selected()?JSON.stringify(exportJSON(selected()),null,2):"")}</pre></div></div>`}
+function exportJSON(n){let o={};if(n.parent){let p=parent(n);if(p)o.parent=state.ns+":"+p.name}o.display={icon:{id:n.display.icon||"minecraft:stone"},title:{text:n.display.title||""},description:{text:n.display.description||""},frame:n.display.frame||"task",show_toast:n.display.show_toast!==false,announce_to_chat:n.display.announce_to_chat!==false,hidden:n.display.hidden===true};if(n.root&&n.display.background)o.display.background=n.display.background;o.criteria={};n.criteria.forEach(c=>{o.criteria[c.id]={trigger:"minecraft:"+c.trigger};if(Object.keys(c.conditions||{}).length)o.criteria[c.id].conditions=c.conditions});if(n.requirements.length)o.requirements=n.requirements.map(g=>g.filter(Boolean)).filter(g=>g.length);if(Object.keys(n.rewards||{}).length)o.rewards=n.rewards;return o}
+function render(){let app=document.getElementById("app");app.innerHTML=state.tab==="tree"?tree():state.tab==="edit"?edit():state.tab==="val"?val():schemaTab()}
+function saveLocal(){localStorage.setItem(NSKEY,JSON.stringify(state))}
+function load(){try{let x=JSON.parse(localStorage.getItem(NSKEY));if(x){Object.assign(state,x);render()}}catch{}}
+function save(){state.nodes.forEach(n=>n.saved=true);saveLocal();render();alert("Guardado.")}
+async function exportZip(){let errors=validate().filter(x=>x[0]==="bad");if(errors.length&&!confirm("Hay errores. ¿Exportar de todos modos?"))return;let files={};files["pack.mcmeta"]=JSON.stringify({pack:{pack_format:48,description:`Advancement Studio — ${state.ns} — Minecraft Java 1.21.1`}},null,2);state.nodes.forEach(n=>files[`data/${state.ns}/advancement/${n.name}.json`]=JSON.stringify(exportJSON(n),null,2));files["README.txt"]=`Minecraft Java 1.21.1 / Fabric\\nSchema source: SpyglassMC vanilla-mcdoc\\nAdvancement path: data/${state.ns}/advancement/\\n`;let blob=zip(files);let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`advancements_${state.ns}.zip`;a.click()}
+function crc(b){let c=-1;for(let x of b){c^=x;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return(c^=-1)>>>0}function u16(n){return new Uint8Array([n&255,n>>>8&255])}function u32(n){return new Uint8Array([n&255,n>>>8&255,n>>>16&255,n>>>24&255])}function cat(...a){let n=a.reduce((s,x)=>s+x.length,0),o=new Uint8Array(n),p=0;for(let x of a)o.set(x,p),p+=x.length;return o}function zip(fs){let e=new TextEncoder(),parts=[],cent=[],off=0;for(let name in fs){let n=e.encode(name),d=e.encode(fs[name]),c=crc(d),h=cat(new Uint8Array([80,75,3,4]),u16(20),u16(0),u16(0),u16(0),u16(0),u32(c),u32(d.length),u32(d.length),u16(n.length),u16(0),n,d);parts.push(h);cent.push(cat(new Uint8Array([80,75,1,2]),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(c),u32(d.length),u32(d.length),u16(n.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(off),n));off+=h.length}let c=cat(...cent);return new Blob([cat(...parts,c,new Uint8Array([80,75,5,6,0,0,0,0]),u16(Object.keys(fs).length),u16(Object.keys(fs).length),u32(c.length),u32(off),u16(0))],{type:"application/zip"})}
+init();load();
+</script></body></html>
