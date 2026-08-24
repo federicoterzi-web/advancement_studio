@@ -23,7 +23,7 @@ textarea{min-height:100px;resize:vertical}button{border:1px solid var(--line);ba
 .tree-links{position:absolute;inset:0;width:2600px;height:1800px;pointer-events:none;overflow:visible}
 .tree-link{fill:none;stroke:#526273;stroke-width:3;opacity:.8}.tree-link.selected{stroke:var(--accent);stroke-width:4}
 .adv-node{position:absolute;width:230px;min-height:105px;border:1px solid var(--line);background:linear-gradient(145deg,#151c24,#0f141a);border-radius:12px;padding:12px;box-shadow:0 8px 24px #0008;cursor:pointer;user-select:none}
-.adv-node:hover{border-color:#8da0b3}.adv-node.selected{transform:none}.adv-node.selected{outline:2px solid var(--accent);box-shadow:0 0 0 5px #7ee78720,0 10px 30px #0009}
+.adv-node:hover{border-color:#8da0b3;transform:translateY(-2px)}.adv-node.selected{outline:2px solid var(--accent);box-shadow:0 0 0 5px #7ee78720,0 10px 30px #0009}
 .adv-node.root{border-color:#8a63d2}.adv-node.goal{border-color:#d4ad48}.adv-node.challenge{border-color:#e05b5b}
 .adv-icon{width:42px;height:42px;float:left;margin-right:10px;border-radius:7px;background:#29323d;border:1px solid #526273;display:flex;align-items:center;justify-content:center;font-size:22px}
 .adv-title{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:2px}.adv-file{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adv-desc{clear:both;color:#b7c1cb;font-size:11px;padding-top:9px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -34,7 +34,7 @@ textarea{min-height:100px;resize:vertical}button{border:1px solid var(--line);ba
 pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}.code{background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:12px;max-height:55vh;overflow:auto}
 .help{background:#13202b;border:1px solid #27465c;padding:10px;border-radius:8px;color:#c7e5ff}.warn{background:#2a2112;border-color:#66501f;color:#f6d98c}
 .tabs{display:flex;gap:5px;border-bottom:1px solid var(--line);margin:-15px -15px 15px;padding:10px 10px 0}.tabs button{border-radius:7px 7px 0 0}.tabs button.active{background:var(--panel);border-bottom-color:var(--panel)}
-.empty{color:var(--muted);text-align:center;padding:35px 10px}.tree .node{transition:.15s transform,.15s border-color,.15s box-shadow}.tree .node:hover{transform:translateX(3px);border-color:var(--accent);box-shadow:0 4px 18px #0006}.tree .node.selected{outline:2px solid var(--accent)}.tree-line{border-left:1px solid #40505f}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:10px;color:var(--muted);margin:2px}.root-badge{color:#d2a8ff}.parent-badge{color:var(--gold)}.trigger-group{border:1px solid var(--line);border-radius:9px;margin:7px 0;overflow:hidden;background:#11161d}.trigger-group summary{cursor:pointer;padding:10px 11px;font-weight:700;list-style:none}.trigger-group summary::-webkit-details-marker{display:none}.trigger-group summary:before{content:"▸";display:inline-block;width:18px;color:var(--muted)}.trigger-group[open] summary:before{content:"▾"}.trigger-options{display:grid;gap:5px;padding:0 7px 7px}.trigger-option{width:100%;text-align:left;padding:8px 9px;background:#151b22}.trigger-option.selected{border-color:var(--accent);background:#17251c}.trigger-option small{display:block;color:var(--muted);margin-top:2px}.param-panel{background:#121a21;border:1px solid #2e414f;border-radius:9px;padding:10px;margin:8px 0}.param-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.param-help{font-size:11px;color:var(--muted);margin-top:6px}.location-builder .help{margin-top:9px}.location-builder select,.location-builder input{min-width:0}.location-builder .row{align-items:flex-start}.location-builder .pill{white-space:nowrap}.small{font-size:11px;color:var(--muted)}.check{display:flex;align-items:center;gap:7px}.check input{width:auto}.editor-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}.save-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.save-status{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:-4px}.save-badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #3a4a55}.save-badge.saved{background:#17351f;color:#8ff0a4}.save-badge.draft{background:#352b16;color:#ffd27a}.save-badge.pinned{background:#25203a;color:#d7b8ff}.pinned-node{box-shadow:0 0 0 2px #a875ff,0 8px 24px rgba(0,0,0,.25)}.node-actions{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}.node-actions button{font-size:10px;padding:4px 6px}.node-actions .danger,.save-actions .danger{border-color:#7c4141;color:#ffb0b0}.ficha-value{background:#0b0f14;border:1px solid var(--line);border-radius:6px;padding:7px 8px;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.save-main{border-color:#79d58a}
+.empty{color:var(--muted);text-align:center;padding:35px 10px}.tree .node{transition:.15s transform,.15s border-color,.15s box-shadow}.tree .node:hover{transform:translateX(3px);border-color:var(--accent);box-shadow:0 4px 18px #0006}.tree .node.selected{outline:2px solid var(--accent)}.tree-line{border-left:1px solid #40505f}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:10px;color:var(--muted);margin:2px}.root-badge{color:#d2a8ff}.parent-badge{color:var(--gold)}.trigger-group{border:1px solid var(--line);border-radius:9px;margin:7px 0;overflow:hidden;background:#11161d}.trigger-group summary{cursor:pointer;padding:10px 11px;font-weight:700;list-style:none}.trigger-group summary::-webkit-details-marker{display:none}.trigger-group summary:before{content:"▸";display:inline-block;width:18px;color:var(--muted)}.trigger-group[open] summary:before{content:"▾"}.trigger-options{display:grid;gap:5px;padding:0 7px 7px}.trigger-option{width:100%;text-align:left;padding:8px 9px;background:#151b22}.trigger-option.selected{border-color:var(--accent);background:#17251c}.trigger-option small{display:block;color:var(--muted);margin-top:2px}.param-panel{background:#121a21;border:1px solid #2e414f;border-radius:9px;padding:10px;margin:8px 0}.param-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.param-help{font-size:11px;color:var(--muted);margin-top:6px}.location-builder .help{margin-top:9px}.location-builder select,.location-builder input{min-width:0}.location-builder .row{align-items:flex-start}.location-builder .pill{white-space:nowrap}.small{font-size:11px;color:var(--muted)}.check{display:flex;align-items:center;gap:7px}.check input{width:auto}.editor-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}.save-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.save-status{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:-4px}.save-badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #3a4a55}.save-badge.saved{background:#17351f;color:#8ff0a4}.save-badge.draft{background:#352b16;color:#ffd27a}.save-badge.pinned{background:#25203a;color:#d7b8ff}.pinned-node{box-shadow:0 0 0 2px #a875ff,0 8px 24px rgba(0,0,0,.25)}.save-main{border-color:#79d58a}
 @media(max-width:1100px){.layout{grid-template-columns:280px 1fr}.right{grid-column:1/-1}.scroll{max-height:none}}
 @media(max-width:700px){.layout{display:block}.panel{margin-bottom:12px}.scroll{max-height:none}}
 </style>
@@ -42,7 +42,7 @@ pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12px/1.4 ui-monospa
 <body>
 <header>
   <h1>⚒ Advancement Studio <span class="badge">Fabric 1.21.1</span></h1>
-  <div class="sub">Constructor visual de árboles de advancements para Fabric 1.21.1: roots, parents, ramas, criterios, lógica AND/OR, display y rewards.</div><div class="small" style="margin-top:6px">🌳 El árbol es interactivo: crear un hijo lo conecta automáticamente con su padre. Podés ordenar, hacer zoom y arrastrar cada nodo.</div><div class="small" style="margin-top:6px">📱 En iPhone: usá <b>📦 Descargar ZIP</b>; luego abrilo desde Archivos. No requiere permisos de carpeta.</div>
+  <div class="sub">Constructor visual de árboles de advancements para Fabric 1.21.1: roots, parents, ramas, criterios, lógica AND/OR, display y rewards.</div><div class="small" style="margin-top:6px">📱 En iPhone: usá <b>📦 Descargar ZIP</b>; luego abrilo desde Archivos. No requiere permisos de carpeta.</div>
 </header>
 
 <div class="layout">
@@ -250,16 +250,7 @@ function editorHtml(n){
  return `<div class="editor-heading"><div><h2>Advancement seleccionado</h2>${saveStatusHtml(n)}</div><div class="save-actions">
  <button class="primary" onclick="saveAdvancement()">💾 Guardar avance</button>
  <button onclick="togglePin()">${n.pinned?"📌 Desfijar":"📌 Fijar avance"}</button>
- <button onclick="duplicateNode()">⧉ Duplicar</button>
- <button class="danger" onclick="deleteNode()">🗑 Eliminar</button>
  </div></div>
- <div class="param-panel ficha-panel"><b>📋 Ficha del avance</b>
-   <div class="param-row">
-     <div><label>Archivo</label><div class="ficha-value">${escapeHtml(n.name)}.json</div></div>
-     <div><label>Padre</label><div class="ficha-value">${escapeHtml(n.parent?(state.nodes.find(x=>x.id===n.parent)?.display?.title||n.parent):"🌳 ROOT")}</div></div>
-   </div>
-   <div class="param-help">Esta es la ficha del nodo seleccionado. Desde acá podés editarlo, duplicarlo o eliminarlo.</div>
- </div>
  <div class="row"><div><label>ID / archivo</label><input value="${escapeHtml(n.name)}" onchange="setN('name',this.value)"></div><div><label>Parent</label><input value="${escapeHtml(n.parent||'(ROOT)')}" disabled></div></div>
  <h3>Display</h3>
  <div class="row"><div><label>Título</label><input value="${escapeHtml(n.display.title)}" onchange="setD('title',this.value)"></div><div><label>Icono (ID)</label><input value="${escapeHtml(n.display.icon)}" onchange="setD('icon',this.value)"></div></div>
@@ -377,7 +368,10 @@ function buildLocationConditions(co){
 }
 function jsonFor(n){
  const o={};
- if(n.parent)o.parent="__NAMESPACE__:"+n.parent;
+ if(n.parent){
+   const p=state.nodes.find(x=>x.id===n.parent);
+   if(p)o.parent="__NAMESPACE__:"+p.name;
+ }
  o.display={title:{text:n.display.title||""},description:{text:n.display.description||""},icon:{id:n.display.icon||"minecraft:stone"},frame:n.display.frame||"task",show_toast:n.display.show_toast!==false,announce_to_chat:n.display.announce_to_chat!==false,hidden:n.display.hidden===true};
  if(n.root&&n.display.background)o.display.background=n.display.background;
  o.criteria={};
@@ -417,161 +411,57 @@ function itemPreset(){let c=selected().criteria.at(-1),x=c.conditions._item;if(x
 function critDel(i){let n=selected(),cid=n.criteria[i].id;n.criteria.splice(i,1);n.requirements=n.requirements.map(g=>g.filter(x=>x!==cid)).filter(g=>g.length);render()}
 function reqAdd(i){selected().requirements[i].push(selected().criteria[0]?.id||"");selected().saved=false;schedulePersist();render()}function reqDel(i){selected().requirements.splice(i,1);selected().saved=false;schedulePersist();render()}
 function reqChange(i,old,v){let g=selected().requirements[i],p=g.indexOf(old);if(p>=0)g[p]=v;selected().saved=false;schedulePersist();render()}
-function openNodeFicha(nid){
- const n=state.nodes.find(x=>x.id===nid);if(!n)return;
- state.selected=nid;state.tab="tree";render();
- requestAnimationFrame(()=>document.getElementById("editor")?.scrollIntoView({behavior:"smooth",block:"start"}));
-}
-function duplicateNodeById(nid){
- state.selected=nid;duplicateNode();
- requestAnimationFrame(()=>document.getElementById("editor")?.scrollIntoView({behavior:"smooth",block:"start"}));
-}
-function deleteNodeById(nid){
- state.selected=nid;deleteNode();
-}
-function duplicateNode(){let n=selected(),x=JSON.parse(JSON.stringify(n));x.id=id();x.name=n.name+"_copy";x.display={...x.display,title:(x.display?.title||x.name)+" (copia)"};x.parent=n.parent;x.root=false;x.pinned=false;x.saved=false;state.nodes.push(x);state.selected=x.id;schedulePersist();render()}
+function duplicateNode(){let n=selected(),x=JSON.parse(JSON.stringify(n));x.id=id();x.name=n.name+"_copy";x.parent=n.parent;x.saved=false;state.nodes.push(x);state.selected=x.id;schedulePersist();render()}
 function deleteNode(){let n=selected();if(!n)return;let children=state.nodes.filter(x=>x.parent===n.id);if(children.length&&!confirm("Tiene hijos. También se desvincularán. ¿Eliminar?"))return;state.nodes=state.nodes.filter(x=>x.id!==n.id);state.nodes.forEach(x=>{if(x.parent===n.id)x.parent=null});state.selected=state.nodes[0]?.id||null;schedulePersist();render()}
-function normalizeTree(){
- const byId=new Map(state.nodes.map(n=>[n.id,n]));
- // Never let a stale parent reference make the tree disappear.
- state.nodes.forEach(n=>{
-   if(n.parent && !byId.has(n.parent)) n.parent=null;
-   if(n.root) n.parent=null;
-   if(!n.pos||typeof n.pos.x!=="number"||typeof n.pos.y!=="number") n.pos={x:0,y:0};
- });
-}
-function treeStructure(){
- normalizeTree();
- const children=new Map();
- state.nodes.forEach(n=>{
-   if(!children.has(n.parent||"__ROOT__"))children.set(n.parent||"__ROOT__",[]);
-   children.get(n.parent||"__ROOT__").push(n);
- });
- const roots=children.get("__ROOT__")||[];
- const levels={};
- const seen=new Set();
- function walk(n,level=0){
-   if(seen.has(n.id))return;
-   seen.add(n.id);
-   (levels[level]??=[]).push(n);
-   (children.get(n.id)||[]).forEach(c=>walk(c,level+1));
- }
- roots.forEach(r=>walk(r,0));
- // Any disconnected/cyclic leftovers are shown as an extra root row.
- state.nodes.filter(n=>!seen.has(n.id)).forEach(n=>walk(n,0));
- return levels;
-}
-function treeLayout(){
- const levels=treeStructure(),pos={};
- Object.entries(levels).forEach(([level,arr])=>{
-   const l=Number(level),gap=270,total=(arr.length-1)*gap;
-   arr.forEach((n,i)=>{
-     // Keep manually positioned nodes; auto-position only untouched nodes.
-     if(!n.pos||n.pos._auto===true||typeof n.pos.x!=="number"||typeof n.pos.y!=="number"){
-       n.pos={x:900-total/2+i*gap,y:100+l*210,_auto:true};
-     }
-     pos[n.id]=n.pos;
-   });
- });
- return pos;
-}
-function treePathHtml(pos){
- return state.nodes.filter(n=>n.parent&&pos[n.parent]&&pos[n.id]).map(n=>{
-   const p=pos[n.parent],c=pos[n.id],x1=p.x+115,y1=p.y+105,x2=c.x+115,y2=c.y,mid=(y1+y2)/2;
-   return `<path class="tree-link ${n.id===state.selected||n.parent===state.selected?"selected":""}" d="M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}"/>`;
- }).join("");
-}
 function treeHtml(){
  if(!state.nodes.length)return `<div class="empty">No hay árbol todavía.</div>`;
- const pos=treeLayout();
- const iconChar=n=>n.display.icon?.includes("diamond")?"◆":n.display.icon?.includes("sword")?"⚔":n.display.icon?.includes("apple")?"🍎":n.root?"🌳":"🏆";
- const cards=state.nodes.map(n=>{
-   const q=pos[n.id]||{x:900,y:100};
-   const parentName=n.parent?state.nodes.find(x=>x.id===n.parent)?.display?.title||n.parent:"ROOT";
-   const cls=`adv-node ${n.root?"root":n.display.frame||"task"} ${n.id===state.selected?"selected":""} ${n.pinned?"pinned-node":""}`;
-   return `<div class="${cls}" data-id="${escapeHtml(n.id)}" style="left:${q.x}px;top:${q.y}px" onclick="selectNode('${n.id}')" onpointerdown="startNodeDrag(event,'${n.id}')">
-     <div class="adv-icon">${iconChar(n)}</div>
-     <div class="adv-title">${n.pinned?"📌 ":""}${escapeHtml(n.display.title||n.name)}</div>
-     <div class="adv-file">${escapeHtml(n.name)} · ${n.root?"ROOT":"PADRE: "+parentName}</div>
-     <div class="adv-desc">${escapeHtml(n.display.description||"")}</div>
-     <div class="adv-pills"><span class="pill">${n.criteria.length} criterios</span><span class="pill">${n.requirements.length} grupos</span></div>
-     <div class="node-actions">
-       <button type="button" onclick="event.stopPropagation();openNodeFicha('${n.id}')">📋 Ficha</button>
-       <button type="button" onclick="event.stopPropagation();duplicateNodeById('${n.id}')">⧉ Duplicar</button>
-       <button type="button" class="danger" onclick="event.stopPropagation();deleteNodeById('${n.id}')">🗑 Eliminar</button>
-     </div>
-   </div>`;
+ const roots=state.nodes.filter(n=>n.root||!n.parent);
+ const levels={}; const walk=(n,l=0)=>{(levels[l]??=[]).push(n);state.nodes.filter(x=>x.parent===n.id).forEach(c=>walk(c,l+1))};roots.forEach(r=>walk(r,0));
+ const pos={}; Object.entries(levels).forEach(([l,arr])=>{
+   const level=Number(l), gap=270, total=(arr.length-1)*gap;
+   arr.forEach((n,i)=>{if(!n.pos||typeof n.pos.x!=="number"||!n.pos._visual) n.pos={x:900-total/2+i*gap,y:100+level*210,_visual:true};pos[n.id]=n.pos});
+ });
+ const links=state.nodes.filter(n=>n.parent&&pos[n.parent]).map(n=>{
+   const p=pos[n.parent],c=pos[n.id],x1=p.x+115,y1=p.y+105,x2=c.x+115,y2=c.y;
+   const mid=(y1+y2)/2;
+   return `<path class="tree-link ${n.id===state.selected||n.parent===state.selected?"selected":""}" d="M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}"/>`;
  }).join("");
+ const iconChar=n=>n.display.icon?.includes("diamond")?"◆":n.display.icon?.includes("sword")?"⚔":n.display.icon?.includes("apple")?"🍎":n.root?"🌳":"🏆";
+ const cards=state.nodes.map(n=>{let q=pos[n.id];let cls=`adv-node ${n.root?"root":n.display.frame||"task"} ${n.id===state.selected?"selected":""} ${n.pinned?"pinned-node":""}`;
+ return `<div class="${cls}" data-id="${n.id}" style="left:${q.x}px;top:${q.y}px" onclick="selectNode('${n.id}')" onpointerdown="startNodeDrag(event,'${n.id}')">
+   <div class="adv-icon">${iconChar(n)}</div><div class="adv-title">${n.pinned?"📌 ":""}${escapeHtml(n.display.title||n.name)}</div>
+   <div class="adv-file">${escapeHtml(n.name)} · ${n.root?"ROOT":"PARENT"}</div>
+   <div class="adv-desc">${escapeHtml(n.display.description||"")}</div>
+   <div class="adv-pills"><span class="pill">${n.criteria.length} criterios</span><span class="pill">${n.requirements.length} grupos</span></div>
+ </div>`}).join("");
  return `<h2>🌳 Árbol visual</h2>
  <div class="tree-toolbar">
-   <button type="button" onclick="treeZoom(-.1)">−</button><span id="zoomLabel" class="zoom-label">100%</span><button type="button" onclick="treeZoom(.1)">＋</button>
-   <button type="button" onclick="treeResetView()">🎯 Centrar</button>
-   <button type="button" onclick="treeAutoLayout()">✨ Ordenar árbol</button>
-   <span class="small">Los hijos cuelgan del padre. Arrastrá un nodo para acomodarlo.</span>
+   <button onclick="treeZoom(-.1)">−</button><span id="zoomLabel" class="zoom-label">100%</span><button onclick="treeZoom(.1)">＋</button>
+   <button onclick="treeResetView()">🎯 Centrar</button><button onclick="treeAutoLayout()">✨ Ordenar</button>
+   <span class="small">Arrastrá los nodos. 📌 Fijado = queda marcado en el árbol. 💾 Guardado = queda almacenado en este navegador.</span>
  </div>
  <div id="treeWrap" class="tree-wrap">
-   <div id="treeCanvas" class="tree-canvas"><div class="tree-grid"></div><svg class="tree-links" viewBox="0 0 2600 1800" preserveAspectRatio="none">${treePathHtml(pos)}</svg>${cards}</div>
+   <div id="treeCanvas" class="tree-canvas"><div class="tree-grid"></div><svg class="tree-links">${links}</svg>${cards}</div>
  </div>`;
 }
-function selectNode(id){if(!state.nodes.some(n=>n.id===id))return;state.selected=id;render()}
+function selectNode(id){state.selected=id;render()}
 let treeView={scale:1,x:0,y:0,pan:false,px:0,py:0};
-function applyTreeView(){
- const c=document.getElementById("treeCanvas");if(!c)return;
- c.style.transform=`translate(${treeView.x}px,${treeView.y}px) scale(${treeView.scale})`;
- const z=document.getElementById("zoomLabel");if(z)z.textContent=Math.round(treeView.scale*100)+"%";
-}
+function applyTreeView(){let c=document.getElementById("treeCanvas");if(!c)return;c.style.transform=`translate(${treeView.x}px,${treeView.y}px) scale(${treeView.scale})`;let z=document.getElementById("zoomLabel");if(z)z.textContent=Math.round(treeView.scale*100)+"%";}
 function treeZoom(d){treeView.scale=Math.max(.45,Math.min(1.8,treeView.scale+d));applyTreeView()}
 function treeResetView(){treeView={scale:1,x:0,y:0,pan:false,px:0,py:0};applyTreeView()}
-function treeAutoLayout(){
- normalizeTree();
- state.nodes.forEach(n=>n.pos={x:0,y:0,_auto:true});
- const levels=treeStructure();
- Object.entries(levels).forEach(([level,arr])=>{
-   const l=Number(level),gap=270,total=(arr.length-1)*gap;
-   arr.forEach((n,i)=>{n.pos={x:900-total/2+i*gap,y:100+l*210,_auto:true};});
- });
- treeView={scale:1,x:0,y:0,pan:false,px:0,py:0};
- schedulePersist();
- render();
-}
+function treeAutoLayout(){state.nodes.forEach(n=>n.pos={x:0,y:0});render()}
 function startNodeDrag(e,nid){
- if(e.button!==0)return;
- e.preventDefault();e.stopPropagation();
- const n=state.nodes.find(x=>x.id===nid);if(!n)return;
- if(!n.pos)n.pos={x:900,y:100,_auto:false};
- n.pos._auto=false;
- const startX=e.clientX,startY=e.clientY,ox=n.pos.x,oy=n.pos.y;
- let moved=false;
- function move(ev){
-   moved=true;
-   n.pos.x=ox+(ev.clientX-startX)/treeView.scale;
-   n.pos.y=oy+(ev.clientY-startY)/treeView.scale;
-   state.selected=nid;
-   updateTreePositions();
- }
- function up(){
-   window.removeEventListener("pointermove",move);
-   window.removeEventListener("pointerup",up);
-   if(moved){n.saved=false;schedulePersist();renderTreeOnly();}
- }
- window.addEventListener("pointermove",move);
- window.addEventListener("pointerup",up);
-}
-function renderTreeOnly(){
- const output=document.getElementById("output");
- if(state.tab!=="tree"||!output)return;
- output.innerHTML=treeHtml();
- requestAnimationFrame(applyTreeView);
+ if(e.button!==0)return;e.stopPropagation();
+ const wrap=document.getElementById("treeWrap"),n=state.nodes.find(x=>x.id===nid),startX=e.clientX,startY=e.clientY,ox=n.pos.x,oy=n.pos.y;
+ function move(ev){n.pos.x=ox+(ev.clientX-startX)/treeView.scale;n.pos.y=oy+(ev.clientY-startY)/treeView.scale;state.selected=nid;updateTreePositions()}
+ function up(){window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up)}
+ window.addEventListener("pointermove",move);window.addEventListener("pointerup",up);
 }
 function updateTreePositions(){
  const c=document.getElementById("treeCanvas");if(!c)return;
- state.nodes.forEach(n=>{
-   const el=c.querySelector(`[data-id="${CSS.escape(n.id)}"]`);
-   if(el&&n.pos){el.style.left=n.pos.x+"px";el.style.top=n.pos.y+"px";}
- });
+ state.nodes.forEach(n=>{let el=c.querySelector(`[data-id="${CSS.escape(n.id)}"]`);if(el){el.style.left=n.pos.x+"px";el.style.top=n.pos.y+"px"}});
  const svg=c.querySelector(".tree-links");if(!svg)return;
- const pos=Object.fromEntries(state.nodes.filter(n=>n.pos).map(n=>[n.id,n.pos]));
- svg.innerHTML=treePathHtml(pos);
+ svg.innerHTML=state.nodes.filter(n=>n.parent).map(n=>{let p=state.nodes.find(x=>x.id===n.parent);if(!p)return "";let x1=p.pos.x+115,y1=p.pos.y+105,x2=n.pos.x+115,y2=n.pos.y,mid=(y1+y2)/2;return `<path class="tree-link ${n.id===state.selected||n.parent===state.selected?"selected":""}" d="M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}"/>`}).join("");
  applyTreeView();
 }
 document.addEventListener("pointerdown",e=>{
@@ -594,7 +484,7 @@ function helpHtml(){return `<h2>Cómo funciona la criatura</h2>
 <h3>Estructura de datapack</h3><pre>mi_pack/
 └─ data/
    └─ mi_namespace/
-      └─ advancements/
+      └─ advancement/
          ├─ root.json
          ├─ primer_paso.json
          └─ rama/
@@ -619,7 +509,7 @@ async function exportFolder(){
     const root=await window.showDirectoryPicker({mode:"readwrite"});
     const data=await root.getDirectoryHandle("data",{create:true});
     const nsDir=await data.getDirectoryHandle(ns,{create:true});
-    const advDir=await nsDir.getDirectoryHandle("advancements",{create:true});
+    const advDir=await nsDir.getDirectoryHandle("advancement",{create:true});
 
     for(const n of state.nodes){
       const parts=n.name.split("/").filter(Boolean);
@@ -632,6 +522,11 @@ async function exportFolder(){
       await writable.close();
     }
 
+    const meta=await root.getFileHandle("pack.mcmeta",{create:true});
+    const mw=await meta.createWritable();
+    await mw.write(JSON.stringify({pack:{pack_format:48,description:`Advancement Studio — ${ns} — Minecraft Java 1.21.1`}},null,2));
+    await mw.close();
+
     const readme=await root.getFileHandle("README_Advancements.txt",{create:true});
     const w=await readme.createWritable();
     await w.write(
@@ -641,13 +536,13 @@ Namespace: ${ns}
 Advancements exportados: ${state.nodes.length}
 
 Ruta:
-data/${ns}/advancements/
+data/${ns}/advancement/
 
 Los archivos conservan las relaciones parent entre sí.
 Esta carpeta puede copiarse dentro de un datapack o utilizarse como referencia para recursos de un mod Fabric.
 `);
     await w.close();
-    alert("¡Carpeta exportada! Se creó data/"+ns+"/advancements/ con "+state.nodes.length+" advancement(s).");
+    alert("¡Carpeta exportada! Se creó data/"+ns+"/advancement/ con "+state.nodes.length+" advancement(s).");
   }catch(e){
     if(e.name!=="AbortError") alert("No se pudo exportar la carpeta: "+e.message);
   }
@@ -684,12 +579,16 @@ async function downloadPack(){
  let ns=prompt("Namespace del proyecto","ggg");if(!ns)return;
  if(!/^[a-z0-9_.-]+$/.test(ns)){alert("Namespace inválido. Usá minúsculas, números, _ . o -.");return}
  const files=state.nodes.map(n=>({
-   path:`data/${ns}/advancements/${n.name}.json`,
+   path:`data/${ns}/advancement/${n.name}.json`,
    text:JSON.stringify(jsonFor(n),null,2).replaceAll("__NAMESPACE__",ns)
  }));
+ files.unshift({
+   path:"pack.mcmeta",
+   text:JSON.stringify({pack:{pack_format:48,description:`Advancement Studio — ${ns} — Minecraft Java 1.21.1`}},null,2)
+ });
  files.push({
    path:"README_Advancements.txt",
-   text:`Advancement Studio — Fabric 1.21.1\nNamespace: ${ns}\nAdvancements: ${state.nodes.length}\n\n`
+   text:`Advancement Studio — Fabric 1.21.1\nNamespace: ${ns}\nAdvancements: ${state.nodes.length}\n\nRuta: data/${ns}/advancement/\nPack format: 48\n`
  });
  const zip=makeZip(files);
  downloadBlob(new Blob([zip],{type:"application/zip"}),`${ns}_advancements.zip`);

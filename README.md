@@ -1,10 +1,14 @@
-# Advancement Studio — Fabric 1.21.1
+# Advancement Studio — Minecraft Java 1.21.1 / Fabric
 
-Constructor visual de árboles de advancements para Minecraft Fabric 1.21.1.
+Standalone mobile-friendly advancement generator based on the Minecraft 1.21.1 advancement structure.
 
-## Estructura
-
-- `index.html` — aplicación web
-- `.github/workflows/deploy.yml` — despliegue automático a GitHub Pages
-
-El workflow se ejecuta al hacer push a `main`.
+Features:
+- guided trigger selector
+- 1.21.1-style criteria/conditions
+- parent/child tree
+- requirements
+- display/rewards
+- validation
+- local project save/recovery
+- ZIP export to `data/<namespace>/advancements/...`
+- no external JavaScript dependency
